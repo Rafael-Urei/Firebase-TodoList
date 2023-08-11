@@ -11,10 +11,10 @@ export const BaseLayout = ({ title, children }: IBasicLayoutProps) => {
   return (
     <>
       <AnimatedPage>
-        <div className="h-screen bg-slate-900 flex flex-col items-center justify-center">
+        <div className="h-screen bg-slate-900 flex flex-col">
           <AnimatedTag>
-            <header>
-              <h1 className="text-zinc-200 text-6xl">{title}</h1>
+            <header className="p-10">
+              <h1 className="text-slate-200 text-6xl">{title}</h1>
             </header>
           </AnimatedTag>
           {children}
