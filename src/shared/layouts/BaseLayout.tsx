@@ -1,4 +1,5 @@
 import "../../styles/global.css";
+import { AnimatedPage } from "../components/AnimatedPage/AnimatedPage";
 
 interface IBasicLayoutProps {
   children: React.ReactNode;
@@ -8,12 +9,14 @@ interface IBasicLayoutProps {
 export const BaseLayout = ({ title, children }: IBasicLayoutProps) => {
   return (
     <>
-      <div className="h-screen bg-slate-900 flex items-center justify-center">
-        <header>
-          <h1 className="text-zinc-200 text-6xl">{title}</h1>
-        </header>
-        <div>{children}</div>
-      </div>
+      <AnimatedPage>
+        <div className="h-screen bg-slate-900 flex flex-col items-center justify-center">
+          <header>
+            <h1 className="text-zinc-200 text-6xl">{title}</h1>
+          </header>
+          {children}
+        </div>
+      </AnimatedPage>
     </>
   );
 };
