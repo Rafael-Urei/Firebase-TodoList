@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
 import { BaseLayout } from "../../shared/layouts/BaseLayout";
+import { useAppLoginModalContext } from "../../shared/contexts/LoginModalContext";
+import { LoginModal } from "../../shared/components/LoginModal/LoginModal";
 
 export const Home = () => {
+  const { isOpen, toggleLoginModal } = useAppLoginModalContext();
   return (
     <>
+      {isOpen && <LoginModal></LoginModal>}
       <BaseLayout title="Welcome">
         <div className="flex">
           <div className="flex flex-col text-zinc-200">
@@ -13,13 +16,13 @@ export const Home = () => {
                 Register
               </button>
               <p className="m-2 text-sm">Or</p>
-              <Link
+              <p
                 about="login-page"
-                to="/login"
                 className="duration-150 cursor-pointer text-sm hover:text-cyan-500"
+                onClick={toggleLoginModal}
               >
                 Sign In
-              </Link>
+              </p>
             </div>
           </div>
         </div>

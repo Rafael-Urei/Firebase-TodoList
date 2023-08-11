@@ -1,16 +1,16 @@
 import { motion } from "framer-motion";
 
-interface IAnimatedPageProps {
+interface IAnimatedTagProps {
   children: React.ReactNode;
 }
 
 const animation = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
+  initial: { opacity: 0, x: 100 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -100 },
 };
 
-export const AnimatedPage = ({ children }: IAnimatedPageProps) => {
+export const AnimatedTag = ({ children }: IAnimatedTagProps) => {
   return (
     <>
       <motion.div

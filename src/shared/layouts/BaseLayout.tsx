@@ -1,4 +1,5 @@
 import "../../styles/global.css";
+import { AnimatedTag } from "../components";
 import { AnimatedPage } from "../components/AnimatedPage/AnimatedPage";
 
 interface IBasicLayoutProps {
@@ -11,9 +12,11 @@ export const BaseLayout = ({ title, children }: IBasicLayoutProps) => {
     <>
       <AnimatedPage>
         <div className="h-screen bg-slate-900 flex flex-col items-center justify-center">
-          <header>
-            <h1 className="text-zinc-200 text-6xl">{title}</h1>
-          </header>
+          <AnimatedTag>
+            <header>
+              <h1 className="text-zinc-200 text-6xl">{title}</h1>
+            </header>
+          </AnimatedTag>
           {children}
         </div>
       </AnimatedPage>
