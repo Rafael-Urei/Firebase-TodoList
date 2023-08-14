@@ -5,9 +5,9 @@ interface IAnimatedPageProps {
 }
 
 const animation = {
-  initial: { opacity: 1, x: 100 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -100 },
+  initial: { opacity: 1 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
 };
 
 export const AnimatedPage = ({ children }: IAnimatedPageProps) => {

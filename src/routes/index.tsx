@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "../pages/Home/Home";
-import { LoginModal } from "../shared/components/LoginModal/LoginModal";
+import { LoginModal } from "../shared/components/LoginPage/LoginPage";
 
 export const AppRoutes = () => {
   return (
