@@ -13,16 +13,16 @@ export const useAppAuthContext = () => {
 
 export const AppAuthProvider = ({ children }: IProp) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [pending, setPending] = useState(true);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     auth.onAuthStateChanged((user: any) => {
       setCurrentUser(user);
-      setPending(false);
+      setLoading(false);
     });
   }, []);
 
   console.log(currentUser);
-  if (pending) {
+  if (loading) {
     return <>Loading</>;
   }
 
