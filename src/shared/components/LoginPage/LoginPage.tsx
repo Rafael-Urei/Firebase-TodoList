@@ -1,10 +1,17 @@
 import { Mail, KeyRound, Check, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BaseLayout } from "../../layouts";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorStyles } from "./validation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/Firebase";
+
+interface IFormData {
+  email: string;
+  password: string;
+}
 
 const userLoginSchema = z.object({
   email: z
@@ -20,14 +27,16 @@ const userLoginSchema = z.object({
 type userLoginSchemaData = z.infer<typeof userLoginSchema>;
 
 export const LoginModal = () => {
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<userLoginSchemaData>({ resolver: zodResolver(userLoginSchema) });
 
-  const handleOnSubmit = (data: any) => {
-    console.log(data);
+  const handleOnSubmit = async (data: IFormData) => {
+    await signInWithEmailAndPassword(auth, data.email, data.password);
+    navigate("/");
   };
 
   return (
@@ -89,7 +98,7 @@ export const LoginModal = () => {
               </button>
             </form>
             <p className="text-zinc-400 text-xs">Or</p>
-            <Link to="/register" className="text-blue-500 text-sm">
+            <Link to="/" className="text-blue-500 text-sm">
               Sign Up
             </Link>
           </div>

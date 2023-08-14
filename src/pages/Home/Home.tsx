@@ -1,9 +1,7 @@
 import { BaseLayout } from "../../shared/layouts/BaseLayout";
-import { useAppLoginModalContext } from "../../shared/contexts/LoginModalContext";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
-  const { toggleLoginModal } = useAppLoginModalContext();
   return (
     <>
       <BaseLayout title="Welcome">
@@ -19,7 +17,6 @@ export const Home = () => {
                 to="/login"
                 about="login-page"
                 className="duration-150 cursor-pointer text-sm hover:text-blue-500"
-                onClick={toggleLoginModal}
               >
                 Sign In
               </Link>

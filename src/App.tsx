@@ -1,13 +1,13 @@
 import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "./routes";
-import { AppLoginModalProvider } from "./shared/contexts/LoginModalContext";
+import { AppAuthProvider } from "./shared/contexts/AuthContext/Auth";
 
 export const App = () => {
   return (
-    <AppLoginModalProvider>
+    <AppAuthProvider>
       <BrowserRouter>
         <AppRoutes></AppRoutes>
       </BrowserRouter>
-    </AppLoginModalProvider>
+    </AppAuthProvider>
   );
 };
