@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "./routes";
 import { AppAuthProvider } from "./shared/contexts/AuthContext/Auth";
 import { AppMenuProvider } from "./shared/contexts/MenuContext/MenuContext";
-import { Menu, ToggleMenu } from "./shared/components";
+import { Menu } from "./shared/components";
 
 export const App = () => {
   return (
@@ -11,7 +11,6 @@ export const App = () => {
         <AppMenuProvider>
           <BrowserRouter>
             <Menu>
-              <ToggleMenu></ToggleMenu>
               <AppRoutes></AppRoutes>
             </Menu>
           </BrowserRouter>
