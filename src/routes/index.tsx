@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "../pages/Home/Home";
-import { LoginModal } from "../shared/components/LoginPage/LoginPage";
+import { LoginModal } from "../pages/Login/LoginPage";
 import { useAppAuthContext } from "../shared/contexts/AuthContext/Auth";
-import { Dashboard } from "../pages/PrivatePages/Dashboard/Dashboard";
+import { Upcoming } from "../pages/Private/Dashboard/Upcoming";
 
 export const AppRoutes = () => {
   const { currentUser }: any = useAppAuthContext();
@@ -12,7 +12,7 @@ export const AppRoutes = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<LoginModal />} />
         <Route path="*" element={<Navigate to="/home" />} />
-        {currentUser && <Route path="/dashboard" element={<Dashboard />} />}
+        {currentUser && <Route path="/upcoming" element={<Upcoming />} />}
       </Routes>
     </>
   );

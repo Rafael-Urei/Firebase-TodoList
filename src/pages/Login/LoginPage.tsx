@@ -1,12 +1,11 @@
 import { Mail, KeyRound, Check, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { BaseLayout } from "../../layouts";
+import { BaseLayout } from "../../shared/layouts";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ErrorStyles } from "./validation";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/Firebase";
+import { auth } from "../../shared/config/Firebase";
 
 interface IFormData {
   email: string;
@@ -63,7 +62,9 @@ export const LoginModal = () => {
                   type="email"
                   placeholder="example@gmail.com"
                   className={
-                    errors.email ? ErrorStyles.Error : ErrorStyles.nonError
+                    errors.password
+                      ? "py-2 pl-8 pr-6 border-b-2 border-b-pink-500 bg-transparent w-full text-sm text-blue-500 font-normal placeholder:opacity-30"
+                      : "py-2 pl-8 pr-6 border-b-2 border-b-blue-500 bg-transparent w-full text-sm text-blue-500 font-normal placeholder:opacity-30"
                   }
                 ></input>
                 {errors.email && (
@@ -84,7 +85,9 @@ export const LoginModal = () => {
                   type="password"
                   placeholder="Type here your password"
                   className={
-                    errors.password ? ErrorStyles.Error : ErrorStyles.nonError
+                    errors.password
+                      ? "py-2 pl-8 pr-6 border-b-2 border-b-pink-500 bg-transparent w-full text-sm text-blue-500 font-normal placeholder:opacity-30"
+                      : "py-2 pl-8 pr-6 border-b-2 border-b-blue-500 bg-transparent w-full text-sm text-blue-500 font-normal placeholder:opacity-30"
                   }
                 ></input>
                 {errors.password && (

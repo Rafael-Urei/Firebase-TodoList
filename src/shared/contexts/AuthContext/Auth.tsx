@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../../config/Firebase";
+import { User } from "firebase/auth";
+import { Loading } from "../../components/Loading/Loading";
 
 interface IProp {
   children: React.ReactNode;
@@ -12,18 +14,17 @@ export const useAppAuthContext = () => {
 };
 
 export const AppAuthProvider = ({ children }: IProp) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    auth.onAuthStateChanged((user: any) => {
+    auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
     });
   }, []);
 
-  console.log(currentUser);
   if (loading) {
-    return <>Loading</>;
+    return <Loading></Loading>;
   }
 
   return (
