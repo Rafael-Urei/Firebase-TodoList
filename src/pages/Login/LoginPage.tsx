@@ -35,7 +35,7 @@ export const LoginModal = () => {
 
   const handleOnSubmit = async (data: IFormData) => {
     await signInWithEmailAndPassword(auth, data.email, data.password);
-    navigate("/");
+    navigate("/upcoming");
   };
 
   return (
