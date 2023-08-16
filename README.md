@@ -1,27 +1,32 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é um simples Todo List com Firebase React e TypeScript. Nele é possível adicionar tasks, editá-las e exclui-las.
 
-Currently, two official plugins are available:
+Nele está presente também um sistema de login e registro, onde usuários podem salvar suas tasks em seus próprios bancos de dados.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Como utilizar?
 
-## Expanding the ESLint configuration
+Muito simples! hehe.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+O usuário pode clonar a aplicação em "https://github.com/Rafael-Urei/Firebase-TodoList"
 
-- Configure the top-level `parserOptions` property like this:
+Rodar o comando npm i para instalar as dependẽncias (Necessário nodeJS).
+
+Rodar o comando npm run dev.
+
+E acessar o localhost.
+
+Em breve terá o site hospedado!
+
+## Bibliotecas e Frameworks utilizadas:
 
 ```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
+   bibliotecas: {
+    firebase: 'Lib de simulação BackEnd.',
+    lucidereact: 'Lib de ícones.',
+    framermotion: 'Lib de animações.',
+    reacthookform: 'Lib de formulários e validação.',
+    reactrouterdom: 'Lib de rotas.'
+    zod: 'Lib de validação.'
    },
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
