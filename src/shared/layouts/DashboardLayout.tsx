@@ -11,7 +11,7 @@ export const DashboardLayout = ({ title, children }: IBasicLayoutProps) => {
   const { isOpen } = useAppMenuContext();
   return (
     <>
-      <div className="h-full bg-zinc-50 flex flex-col text-zinc-700">
+      <div className="h-full bg-zinc-50 flex flex-col text-zinc-700 ml-6">
         <div className="flex items-start">
           <div className={!isOpen ? "mt-6 mr-6 ml-2" : "mt-6"}>
             <ToggleMenu></ToggleMenu>

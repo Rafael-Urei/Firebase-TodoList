@@ -6,6 +6,7 @@ import { Upcoming } from "../pages/Private/Dashboard/Upcoming";
 
 export const AppRoutes = () => {
   const { currentUser }: any = useAppAuthContext();
+  console.log(currentUser);
   return (
     <>
       <Routes>

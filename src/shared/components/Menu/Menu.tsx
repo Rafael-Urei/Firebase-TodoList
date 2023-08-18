@@ -10,7 +10,7 @@ export const Menu = ({ children }: IProps) => {
   const { isOpen, toggleMenu } = useAppMenuContext();
   return (
     <>
-      <div className="h-screen p-4">
+      <div className="h-screen">
         {isOpen ? (
           <motion.div className="relative flex flex-col gap-4 h-full flex-1 p-4 bg-zinc-100 rounded-md text-zinc-700">
             <header className="w-full flex flex-col gap-4">
