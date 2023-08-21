@@ -2,11 +2,21 @@ import { motion } from "framer-motion";
 import { z } from "zod";
 import { useAppAddModalContext } from "../../contexts/AddTaskModalContext/AddModal";
 import { X } from "lucide-react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+type FormData = {
+  title: string;
+  description: string;
+  date: string;
+  list: string;
+};
 
 const TaskFormSchema = z.object({
   title: z.string().nonempty("Cannot be blank!"),
   description: z.string().nonempty("Cannot be blank!"),
   list: z.string(),
+  date: z.string(),
 });
 
 const animation = {
@@ -17,6 +27,17 @@ const animation = {
 
 export const AddTask = () => {
   const { toggleAddTaskModal } = useAppAddModalContext();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<TaskFormSchemaData>({ resolver: zodResolver(TaskFormSchema) });
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log(data);
+  };
+
+  type TaskFormSchemaData = z.infer<typeof TaskFormSchema>;
   return (
     <>
       <div className="fixed z-10 h-screen w-screen bg-slate-800 bg-opacity-20 backdrop-blur-sm flex items-center justify-center">
@@ -38,18 +59,26 @@ export const AddTask = () => {
           <header className="flex w-full p-4 items-center justify-center">
             <h1 className="text-lg font-semibold">Task</h1>
           </header>
-          <form className="flex flex-col gap-4 h-full w-full">
+          <form
+            className="flex flex-col gap-4 h-full w-full"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <input
+              {...register("title")}
               className="p-2 text-slate-800 rounded-sm border bg-transparent text-sm"
               placeholder="ex. Study React"
             ></input>
             <textarea
+              {...register("description")}
               className="bg-transparent border p-2 rounded"
               placeholder="Description"
             ></textarea>
             <div className="flex gap-2 items-center">
               <label>List:</label>
-              <select onChange={(e) => console.log(e.target.value)}>
+              <select
+                {...register("list")}
+                onChange={(e) => console.log(e.target.value)}
+              >
                 <option>Work</option>
                 <option>Study</option>
                 <option>Trip</option>
@@ -58,6 +87,7 @@ export const AddTask = () => {
             <div className="flex gap-2 items-center">
               <label>Due date:</label>
               <input
+                {...register("date")}
                 className="border rounded-md bg-slate-100 w-28 p-2 flex items-center justify-center text-center"
                 maxLength={10}
               ></input>
