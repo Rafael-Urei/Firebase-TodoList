@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { z } from "zod";
 import { useAppAddModalContext } from "../../contexts/AddTaskModalContext/AddModal";
-import { X } from "lucide-react";
+import { Calendar, X } from "lucide-react";
+import { CalendarComponent } from "../Calendar/Calendar";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAppCalendarContext } from "../../contexts/CalendarContext/CalendarContext";
 
 type FormData = {
   title: string;
@@ -15,8 +17,8 @@ type FormData = {
 const TaskFormSchema = z.object({
   title: z.string().nonempty("Cannot be blank!"),
   description: z.string().nonempty("Cannot be blank!"),
-  list: z.string(),
-  date: z.string(),
+  list: z.string().nonempty("Cannot be blank!"),
+  date: z.string().nonempty("Cannot be blank!"),
 });
 
 const animation = {
@@ -26,6 +28,8 @@ const animation = {
 };
 
 export const AddTask = () => {
+  const { isOpen, toggleCalendar } = useAppCalendarContext();
+  console.log(isOpen);
   const { toggleAddTaskModal } = useAppAddModalContext();
   const {
     register,
@@ -68,11 +72,21 @@ export const AddTask = () => {
               className="p-2 text-slate-800 rounded-sm border bg-transparent text-sm"
               placeholder="ex. Study React"
             ></input>
+            {errors.title && (
+              <span className="text-pink-500 italic text-xs px-3">
+                {errors.title.message}
+              </span>
+            )}
             <textarea
               {...register("description")}
               className="bg-transparent border p-2 rounded"
               placeholder="Description"
             ></textarea>
+            {errors.description && (
+              <span className="text-pink-500 italic text-xs px-3">
+                {errors.description.message}
+              </span>
+            )}
             <div className="flex gap-2 items-center">
               <label>List:</label>
               <select
@@ -84,13 +98,27 @@ export const AddTask = () => {
                 <option>Trip</option>
               </select>
             </div>
-            <div className="flex gap-2 items-center">
+            {errors.list && (
+              <span className="text-pink-500 italic text-xs px-3">
+                {errors.list.message}
+              </span>
+            )}
+            <div className="flex gap-2 items-center relative">
               <label>Due date:</label>
               <input
                 {...register("date")}
                 className="border rounded-md bg-slate-100 w-28 p-2 flex items-center justify-center text-center"
                 maxLength={10}
               ></input>
+              {errors.date && (
+                <span className="text-pink-500 italic text-xs px-3">
+                  {errors.date.message}
+                </span>
+              )}
+              <button type="button">
+                <Calendar onClick={toggleCalendar} />
+              </button>
+              {isOpen && <CalendarComponent />}
             </div>
             <button type="submit" className="bg-yellow-500 rounded p-2">
               Add Task

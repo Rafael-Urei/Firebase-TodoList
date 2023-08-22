@@ -3,3 +3,4 @@ export * from "./AnimatedTag/AnimatedTag";
 export * from "./Loading/Loading";
 export * from "./Menu/Menu";
 export * from "./ToggleMenu/ToggleMenu";
+export * from "./Calendar/Calendar";
