@@ -3,6 +3,8 @@ import { createContext, useCallback, useContext, useState } from "react";
 interface ICalendarData {
   isOpen: boolean;
   toggleCalendar: () => void;
+  inputValue: Date;
+  setInputValue: (e: Date) => void;
 }
 
 interface IProp {
@@ -17,6 +19,7 @@ export const useAppCalendarContext = () => {
 
 export const AppCalendarProvider = ({ children }: IProp) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<Date>(new Date());
 
   const toggleCalendar = useCallback(() => {
     setIsOpen((prev) => !prev);
@@ -24,7 +27,9 @@ export const AppCalendarProvider = ({ children }: IProp) => {
 
   return (
     <>
-      <CalendarContext.Provider value={{ isOpen, toggleCalendar }}>
+      <CalendarContext.Provider
+        value={{ isOpen, toggleCalendar, inputValue, setInputValue }}
+      >
         {children}
       </CalendarContext.Provider>
     </>

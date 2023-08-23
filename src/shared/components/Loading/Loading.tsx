@@ -14,7 +14,7 @@ export const Loading = () => {
         initial="initial"
         animate="animate"
         exit="exit"
-        className="h-screen flex items-center justify-center flex-col gap-4"
+        className="h-screen w-screen flex items-center justify-center flex-col gap-4"
       >
         <div className="flex gap-2 items-center justify-center">
           <div className="h-3 w-3 bg-slate-600 rounded-full animate-bounce"></div>

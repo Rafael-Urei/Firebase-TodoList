@@ -1,5 +1,5 @@
 import "../../../styles/global.css";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import {
   add,
   eachDayOfInterval,
@@ -12,8 +12,10 @@ import {
   startOfToday,
 } from "date-fns";
 import { useState } from "react";
+import { useAppCalendarContext } from "../../contexts/CalendarContext/CalendarContext";
 
 export const CalendarComponent = () => {
+  const { setInputValue, toggleCalendar } = useAppCalendarContext();
   let actualDay = startOfToday();
   let [currentMonth, setCurrentMonth] = useState(format(actualDay, "MMM-yyyy"));
   let [selectedDay, setSelectedDay] = useState(actualDay);
@@ -39,9 +41,22 @@ export const CalendarComponent = () => {
     });
     setCurrentMonth(format(firstDayOfNextMonth, "MMM-yyyy"));
   };
+
+  const handleDays = (day: Date) => {
+    setSelectedDay(day);
+    setInputValue(day);
+  };
+
   return (
     <>
-      <div className="absolute bg-slate-50 scale-75 h-auto w-96 border py-4 shadow-lg rounded-md flex flex-col justify-center">
+      <div className="absolute left-1/2  bg-slate-50 scale-75 h-auto w-96 border py-4 shadow-lg rounded-md flex flex-col justify-center">
+        <button
+          className="absolute top-3 right-3"
+          type="button"
+          onClick={toggleCalendar}
+        >
+          <X />
+        </button>
         <div className="flex gap-2 item-center justify-center">
           <div>
             <button
@@ -91,7 +106,7 @@ export const CalendarComponent = () => {
               >
                 <button
                   type="button"
-                  onClick={() => setSelectedDay(day)}
+                  onClick={() => handleDays(day)}
                   className={
                     isEqual(day, selectedDay)
                       ? "bg-cyan-500 text-slate-50 h-8 w-8 rounded-full duration-200"
@@ -100,7 +115,7 @@ export const CalendarComponent = () => {
                       : "hover:bg-slate-200 text-slate-700 h-8 w-8 rounded-full duration-200"
                   }
                 >
-                  <time dateTime={format(day, "yyyy-MM-dd")}>
+                  <time dateTime={format(day, "yyyy/MM/dd")}>
                     {format(day, "d")}
                   </time>
                 </button>

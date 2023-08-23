@@ -1,24 +1,25 @@
 import { motion } from "framer-motion";
 import { z } from "zod";
 import { useAppAddModalContext } from "../../contexts/AddTaskModalContext/AddModal";
-import { Calendar, X } from "lucide-react";
+import { Calendar, Plus, X } from "lucide-react";
 import { CalendarComponent } from "../Calendar/Calendar";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppCalendarContext } from "../../contexts/CalendarContext/CalendarContext";
+import { format } from "date-fns";
 
 type FormData = {
   title: string;
   description: string;
-  date: string;
+  date: string | Date;
   list: string;
 };
 
 const TaskFormSchema = z.object({
   title: z.string().nonempty("Cannot be blank!"),
-  description: z.string().nonempty("Cannot be blank!"),
+  description: z.string(),
   list: z.string().nonempty("Cannot be blank!"),
-  date: z.string().nonempty("Cannot be blank!"),
+  date: z.string().nonempty(),
 });
 
 const animation = {
@@ -28,8 +29,7 @@ const animation = {
 };
 
 export const AddTask = () => {
-  const { isOpen, toggleCalendar } = useAppCalendarContext();
-  console.log(isOpen);
+  const { isOpen, toggleCalendar, inputValue } = useAppCalendarContext();
   const { toggleAddTaskModal } = useAppAddModalContext();
   const {
     register,
@@ -38,7 +38,9 @@ export const AddTask = () => {
   } = useForm<TaskFormSchemaData>({ resolver: zodResolver(TaskFormSchema) });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
+    data.date = inputValue.toISOString();
     console.log(data);
+    toggleAddTaskModal();
   };
 
   type TaskFormSchemaData = z.infer<typeof TaskFormSchema>;
@@ -79,8 +81,8 @@ export const AddTask = () => {
             )}
             <textarea
               {...register("description")}
-              className="bg-transparent border p-2 rounded"
-              placeholder="Description"
+              className="bg-transparent border p-2 rounded placeholder:italic placeholder:text-xs"
+              placeholder="Opitional: Description"
             ></textarea>
             {errors.description && (
               <span className="text-pink-500 italic text-xs px-3">
@@ -89,10 +91,7 @@ export const AddTask = () => {
             )}
             <div className="flex gap-2 items-center">
               <label>List:</label>
-              <select
-                {...register("list")}
-                onChange={(e) => console.log(e.target.value)}
-              >
+              <select {...register("list")}>
                 <option>Work</option>
                 <option>Study</option>
                 <option>Trip</option>
@@ -106,8 +105,9 @@ export const AddTask = () => {
             <div className="flex gap-2 items-center relative">
               <label>Due date:</label>
               <input
+                value={format(inputValue, "MM/dd/yyyy")}
                 {...register("date")}
-                className="border rounded-md bg-slate-100 w-28 p-2 flex items-center justify-center text-center"
+                className="text-slate-500 border rounded-md bg-transparent w-28 p-2 flex items-center justify-center text-center"
                 maxLength={10}
               ></input>
               {errors.date && (
@@ -116,12 +116,18 @@ export const AddTask = () => {
                 </span>
               )}
               <button type="button">
-                <Calendar onClick={toggleCalendar} />
+                <Calendar
+                  className="h-4 w-4 text-slate-500"
+                  onClick={toggleCalendar}
+                />
               </button>
               {isOpen && <CalendarComponent />}
             </div>
-            <button type="submit" className="bg-yellow-500 rounded p-2">
-              Add Task
+            <button
+              type="submit"
+              className="flex items-center self-center bg-emerald-300 rounded-full h-10 w-10 p-2"
+            >
+              <Plus className="text-slate-50" />
             </button>
           </form>
         </motion.div>
