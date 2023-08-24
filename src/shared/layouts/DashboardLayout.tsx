@@ -28,7 +28,7 @@ export const DashboardLayout = ({ title, children }: IBasicLayoutProps) => {
               </div>
               <div className="flex gap-4 items-center justify-center">
                 <div
-                  className="rounded-full h-10 w-10 bg-slate-600"
+                  className="rounded-full h-10 w-10 bg-slate-600 cursor-pointer"
                   onClick={() => navigate("/profile")}
                 >
                   <img />

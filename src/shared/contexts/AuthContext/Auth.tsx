@@ -3,11 +3,15 @@ import { auth } from "../../config/Firebase";
 import { User } from "firebase/auth";
 import { Loading } from "../../components/Loading/Loading";
 
+interface IAuthData {
+  currentUser: User | null;
+}
+
 interface IProp {
   children: React.ReactNode;
 }
 
-const AuthContext = createContext({});
+const AuthContext = createContext({} as IAuthData);
 
 export const useAppAuthContext = () => {
   return useContext(AuthContext);
