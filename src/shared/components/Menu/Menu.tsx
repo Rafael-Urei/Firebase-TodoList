@@ -39,8 +39,7 @@ const ListWithRoutes = ({ to, label, onClick, icon }: LinkRouteProps) => {
 };
 
 export const Menu = ({ children }: IProps) => {
-  const { isOpen, toggleMenu, menuOptions, setMenuOptions } =
-    useAppMenuContext();
+  const { isOpen, toggleMenu, menuOptions } = useAppMenuContext();
   return (
     <>
       <div className="h-screen">

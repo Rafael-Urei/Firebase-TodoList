@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppCalendarContext } from "../../contexts/CalendarContext/CalendarContext";
 import { format } from "date-fns";
+import { useAppTaskContext } from "../../contexts/TasksContext/TasksContext";
 
 type FormData = {
   title: string;
@@ -30,6 +31,7 @@ const animation = {
 
 export const AddTask = () => {
   const { isOpen, toggleCalendar, inputValue } = useAppCalendarContext();
+  const { setTasks } = useAppTaskContext();
   const { toggleAddTaskModal } = useAppAddModalContext();
   const {
     register,

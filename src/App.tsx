@@ -6,24 +6,27 @@ import { Menu } from "./shared/components";
 import { AppTimeProvider } from "./shared/contexts/TimeContext/TimeContext";
 import { AppAddModalProvider } from "./shared/contexts/AddTaskModalContext/AddModal";
 import { AppCalendarProvider } from "./shared/contexts/CalendarContext/CalendarContext";
+import { AppTasksProvider } from "./shared/contexts/TasksContext/TasksContext";
 
 export const App = () => {
   return (
     <div className="flex bg-slate-50 w-screen">
       <AppAuthProvider>
-        <AppCalendarProvider>
-          <AppAddModalProvider>
-            <AppTimeProvider>
-              <AppMenuProvider>
-                <BrowserRouter>
-                  <Menu>
-                    <AppRoutes></AppRoutes>
-                  </Menu>
-                </BrowserRouter>
-              </AppMenuProvider>
-            </AppTimeProvider>
-          </AppAddModalProvider>
-        </AppCalendarProvider>
+        <AppTasksProvider>
+          <AppCalendarProvider>
+            <AppAddModalProvider>
+              <AppTimeProvider>
+                <AppMenuProvider>
+                  <BrowserRouter>
+                    <Menu>
+                      <AppRoutes></AppRoutes>
+                    </Menu>
+                  </BrowserRouter>
+                </AppMenuProvider>
+              </AppTimeProvider>
+            </AppAddModalProvider>
+          </AppCalendarProvider>
+        </AppTasksProvider>
       </AppAuthProvider>
     </div>
   );

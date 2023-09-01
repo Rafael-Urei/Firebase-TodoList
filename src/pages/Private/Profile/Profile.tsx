@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
   const { currentUser } = useAppAuthContext();
+  console.log(currentUser);
   const navigate = useNavigate();
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
   const [changeProfile, setChangeProfile] = useState<boolean>(false);

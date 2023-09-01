@@ -17,10 +17,6 @@ export const useAppTimeContext = () => {
 export const AppTimeProvider = ({ children }: IProp) => {
   const [actualDate] = useState(18);
 
-  //   const toggleMenu = useCallback(() => {
-  //     setIsOpen((prev) => !prev);
-  //   }, []);
-
   return (
     <>
       <TimeContext.Provider value={{ actualDate }}>
