@@ -27,8 +27,8 @@ const ListWithRoutes = ({ to, label, onClick, icon }: LinkRouteProps) => {
     <li
       className={
         !!match
-          ? "bg-slate-300 flex items-center p-2 rounded gap-2 cursor-pointer"
-          : "bg-trasnparent flex items-center p-2 rounded gap-2 cursor-pointer hover:bg-slate-200"
+          ? "bg-zinc-200 text-sm font-bold flex items-center p-2 rounded gap-2 cursor-pointer"
+          : "bg-trasnparent text-sm flex items-center p-2 rounded gap-2 cursor-pointer hover:bg-slate-200"
       }
       onClick={handleNavigate}
     >

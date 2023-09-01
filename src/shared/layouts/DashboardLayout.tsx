@@ -4,6 +4,8 @@ import { ToggleMenu } from "../components";
 import { useAppMenuContext } from "../contexts/MenuContext/MenuContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/Firebase";
+import { useAppTaskContext } from "../contexts/TasksContext/TasksContext";
+import { startOfToday } from "date-fns";
 
 interface IBasicLayoutProps {
   children: React.ReactNode;
@@ -13,6 +15,12 @@ interface IBasicLayoutProps {
 export const DashboardLayout = ({ title, children }: IBasicLayoutProps) => {
   const navigate = useNavigate();
   const { isOpen } = useAppMenuContext();
+  const { tasks } = useAppTaskContext();
+  let actualDate = startOfToday().toISOString();
+
+  const lengthOfTasks = tasks.filter((task) => task.date === actualDate);
+  console.log(lengthOfTasks);
+
   return (
     <>
       <div className="h-full bg-zinc-50 flex flex-col text-zinc-700 ml-6">
@@ -24,7 +32,9 @@ export const DashboardLayout = ({ title, children }: IBasicLayoutProps) => {
             <header className="bg-zinc-50 p-4 rounded flex items-center gap-4 justify-between">
               <div className="flex items-center justify-center gap-4">
                 <h1 className="text-4xl text-zinc-700 font-bold">{title}</h1>
-                <div className="h-9 w-9 border bg-zinc-50"></div>
+                <div className="h-9 w-9 border bg-zinc-50 flex items-center justify-center font-bold">
+                  {lengthOfTasks.length}
+                </div>
               </div>
               <div className="flex gap-4 items-center justify-center">
                 <div
