@@ -9,15 +9,30 @@ import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
   const { currentUser } = useAppAuthContext();
-  console.log(currentUser);
   const navigate = useNavigate();
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
+  const [imageSrc, setImageSrc] = useState<
+    string | null | undefined | ArrayBuffer
+  >();
   const [changeProfile, setChangeProfile] = useState<boolean>(false);
 
   const handleVerifyEmail = async () => {
     await sendEmailVerification(auth.currentUser as User).then(() => {
       setShowPopUp((prev) => !prev);
     });
+  };
+
+  const handleChooseImage = (e: any) => {
+    const file = e.target.files[0];
+    console.log(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = (event) => {
+        const readerTarget = event.target;
+        setImageSrc(readerTarget?.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const animation = {
@@ -46,9 +61,17 @@ export const Profile = () => {
           </button>
         </div>
         <div className="flex flex-col gap-4 shadow-md bg-slate-50 h-2/3 w-96 rounded-md items-center justify-center py-5">
-          <div className="flex h-24 w-24 bg-slate-200 rounded-full">
-            <img></img>
-          </div>
+          <label className="flex h-24 w-24 bg-slate-200 rounded-full items-center justify-center cursor-pointer">
+            <input
+              type="file"
+              className="hidden"
+              onChange={(e) => handleChooseImage(e)}
+            />
+            <span className="text-[10px] w-full text-center font-medium text-slate-600">
+              {}
+            </span>
+          </label>
+
           <Divider />
           {!changeProfile ? (
             <button
