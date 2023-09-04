@@ -5,7 +5,7 @@ import { useAppAddModalContext } from "../../../shared/contexts/AddTaskModalCont
 import { useAppTaskContext } from "../../../shared/contexts/TasksContext/TasksContext";
 import { useAppTimeContext } from "../../../shared/contexts/TimeContext/TimeContext";
 import { DashboardLayout } from "../../../shared/layouts/DashboardLayout";
-import { format, parse, startOfToday } from "date-fns";
+import { format, startOfToday } from "date-fns";
 
 export const Today = () => {
   const { isOpen } = useAppAddModalContext();

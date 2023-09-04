@@ -14,12 +14,12 @@ export type FormData = {
   title: string;
   description: string;
   date: string | Date;
-  list: string;
+  type: string;
   id: string;
 };
 
 interface ITasksContextData {
-  tasks: object[];
+  tasks: FormData[];
   setTasks: (newTasks: FormData[]) => void;
 }
 
