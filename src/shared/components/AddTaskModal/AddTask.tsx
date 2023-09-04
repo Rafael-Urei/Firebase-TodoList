@@ -8,18 +8,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppCalendarContext } from "../../contexts/CalendarContext/CalendarContext";
 import { format } from "date-fns";
 import { useAppTaskContext } from "../../contexts/TasksContext/TasksContext";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../config/Firebase";
+import { useAppAuthContext } from "../../contexts/AuthContext/Auth";
 
 type FormData = {
   title: string;
   description: string;
   date: string | Date;
-  list: string;
+  type: string;
 };
 
-const TaskFormSchema = z.object({
+export const TaskFormSchema = z.object({
   title: z.string().nonempty("Cannot be blank!"),
   description: z.string(),
-  list: z.string().nonempty("Cannot be blank!"),
+  type: z.string().nonempty("Cannot be blank!"),
   date: z.string().nonempty(),
 });
 
@@ -33,15 +36,28 @@ export const AddTask = () => {
   const { isOpen, toggleCalendar, inputValue } = useAppCalendarContext();
   const { setTasks } = useAppTaskContext();
   const { toggleAddTaskModal } = useAppAddModalContext();
+  const { currentUser } = useAppAuthContext();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<TaskFormSchemaData>({ resolver: zodResolver(TaskFormSchema) });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     data.date = inputValue.toISOString();
-    console.log(data);
+    const tasksRef = collection(db, "users", `${currentUser?.uid}`, "tasks");
+    await addDoc(tasksRef, {
+      ...data,
+      done: false,
+    }).then((response) =>
+      setTasks((prev) => {
+        {
+          {
+            return [...prev, { ...data, done: false, id: response.id }];
+          }
+        }
+      })
+    );
     toggleAddTaskModal();
   };
 
@@ -93,17 +109,18 @@ export const AddTask = () => {
             )}
             <div className="flex gap-2 items-center">
               <label>List:</label>
-              <select {...register("list")}>
+              <select {...register("type")}>
                 <option>Work</option>
                 <option>Study</option>
                 <option>Trip</option>
               </select>
             </div>
-            {errors.list && (
+            {errors.type && (
               <span className="text-pink-500 italic text-xs px-3">
-                {errors.list.message}
+                {errors.type.message}
               </span>
             )}
+
             <div className="flex gap-2 items-center relative">
               <label>Due date:</label>
               <input
@@ -123,8 +140,9 @@ export const AddTask = () => {
                   onClick={toggleCalendar}
                 />
               </button>
-              {isOpen && <CalendarComponent />}
             </div>
+
+            {isOpen && <CalendarComponent />}
             <button
               type="submit"
               className="flex items-center self-center bg-emerald-300 rounded-full h-10 w-10 p-2"

@@ -5,7 +5,6 @@ import { useAppMenuContext } from "../contexts/MenuContext/MenuContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/Firebase";
 import { useAppTaskContext } from "../contexts/TasksContext/TasksContext";
-import { startOfToday } from "date-fns";
 
 interface IBasicLayoutProps {
   children: React.ReactNode;
@@ -16,10 +15,6 @@ export const DashboardLayout = ({ title, children }: IBasicLayoutProps) => {
   const navigate = useNavigate();
   const { isOpen } = useAppMenuContext();
   const { tasks } = useAppTaskContext();
-  let actualDate = startOfToday().toISOString();
-
-  const lengthOfTasks = tasks.filter((task) => task.date === actualDate);
-  console.log(lengthOfTasks);
 
   return (
     <>
@@ -33,7 +28,7 @@ export const DashboardLayout = ({ title, children }: IBasicLayoutProps) => {
               <div className="flex items-center justify-center gap-4">
                 <h1 className="text-4xl text-zinc-700 font-bold">{title}</h1>
                 <div className="h-9 w-9 border bg-zinc-50 flex items-center justify-center font-bold">
-                  {lengthOfTasks.length}
+                  {tasks.length}
                 </div>
               </div>
               <div className="flex gap-4 items-center justify-center">

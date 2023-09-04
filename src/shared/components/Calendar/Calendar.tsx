@@ -49,7 +49,7 @@ export const CalendarComponent = () => {
 
   return (
     <>
-      <div className="absolute left-1/2  bg-slate-50 scale-75 h-auto w-96 border py-4 shadow-lg rounded-md flex flex-col justify-center">
+      <div className="self-center w-full border-blue-400 bg-slate-50 scale-75 h-auto border py-4 rounded-md flex flex-col justify-center">
         <button
           className="absolute top-3 right-3"
           type="button"
@@ -109,7 +109,7 @@ export const CalendarComponent = () => {
                   onClick={() => handleDays(day)}
                   className={
                     isEqual(day, selectedDay)
-                      ? "bg-cyan-500 text-slate-50 h-8 w-8 rounded-full duration-200"
+                      ? "bg-blue-500 text-slate-50 h-8 w-8 rounded-full duration-200"
                       : isEqual(day, selectedDay) && !isToday(day)
                       ? "hover:bg-slate-200 text-slate-700 h-8 w-8 rounded-full duration-200 bg-black"
                       : "hover:bg-slate-200 text-slate-700 h-8 w-8 rounded-full duration-200"

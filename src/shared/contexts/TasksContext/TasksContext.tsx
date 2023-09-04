@@ -16,11 +16,14 @@ export type FormData = {
   date: string | Date;
   type: string;
   id: string;
+  done: boolean;
 };
 
 interface ITasksContextData {
   tasks: FormData[];
   setTasks: (newTasks: FormData[]) => void;
+  selectedTask: FormData;
+  setSelectedTask: (task: FormData) => void;
 }
 
 interface IProp {
@@ -36,6 +39,14 @@ export const useAppTaskContext = () => {
 export const AppTasksProvider = ({ children }: IProp) => {
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState<FormData[]>([]);
+  const [selectedTask, setSelectedTask] = useState<FormData>({
+    title: "",
+    description: "",
+    date: "",
+    type: "",
+    id: "",
+    done: false,
+  });
   const { currentUser } = useAppAuthContext();
 
   useEffect(() => {
@@ -55,13 +66,24 @@ export const AppTasksProvider = ({ children }: IProp) => {
     setTasks(newTasks);
   }, []);
 
+  const handleSelectedTask = useCallback((task: FormData) => {
+    setSelectedTask(task);
+  }, []);
+
   if (loading) {
     return <Loading></Loading>;
   }
 
   return (
     <>
-      <TasksContext.Provider value={{ tasks, setTasks: handleAddTasks }}>
+      <TasksContext.Provider
+        value={{
+          tasks,
+          setTasks: handleAddTasks,
+          selectedTask,
+          setSelectedTask: handleSelectedTask,
+        }}
+      >
         {children}
       </TasksContext.Provider>
     </>

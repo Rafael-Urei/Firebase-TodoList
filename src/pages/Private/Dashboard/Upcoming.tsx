@@ -12,7 +12,7 @@ export const Upcoming = () => {
       <DashboardLayout title="Upcoming">
         <div className="flex flex-wrap gap-4 p-4">
           <TodayTasks />
-          <TomorrowTasks />
+          <TomorrowTasks day="tomorrow" />
         </div>
       </DashboardLayout>
     </>

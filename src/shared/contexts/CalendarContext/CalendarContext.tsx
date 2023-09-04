@@ -1,3 +1,4 @@
+import { startOfToday } from "date-fns";
 import { createContext, useCallback, useContext, useState } from "react";
 
 interface ICalendarData {
@@ -19,7 +20,7 @@ export const useAppCalendarContext = () => {
 
 export const AppCalendarProvider = ({ children }: IProp) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<Date>(new Date());
+  const [inputValue, setInputValue] = useState<Date>(startOfToday());
 
   const toggleCalendar = useCallback(() => {
     setIsOpen((prev) => !prev);

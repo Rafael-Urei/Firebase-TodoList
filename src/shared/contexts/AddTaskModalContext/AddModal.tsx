@@ -1,4 +1,6 @@
 import { createContext, useCallback, useContext, useState } from "react";
+import { useAppCalendarContext } from "../CalendarContext/CalendarContext";
+import { startOfToday } from "date-fns";
 
 interface IProp {
   children: React.ReactNode;
@@ -17,9 +19,11 @@ export const useAppAddModalContext = () => {
 
 export const AppAddModalProvider = ({ children }: IProp) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { setInputValue } = useAppCalendarContext();
 
   const toggleAddTaskModal = useCallback(() => {
     setIsOpen((prev) => !prev);
+    setInputValue(startOfToday());
   }, []);
 
   return (

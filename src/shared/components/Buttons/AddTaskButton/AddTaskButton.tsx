@@ -1,12 +1,26 @@
 import { Plus } from "lucide-react";
 import { useAppAddModalContext } from "../../../contexts/AddTaskModalContext/AddModal";
+import { useAppCalendarContext } from "../../../contexts/CalendarContext/CalendarContext";
+import { startOfTomorrow } from "date-fns";
 
-export const AddTaskButton = () => {
+interface Props {
+  day: string;
+}
+
+export const AddTaskButton = ({ day }: Props) => {
   const { toggleAddTaskModal } = useAppAddModalContext();
+  const { setInputValue } = useAppCalendarContext();
+
+  const handleOpenModal = () => {
+    toggleAddTaskModal();
+    {
+      day === "tomorrow" && setInputValue(startOfTomorrow());
+    }
+  };
   return (
     <>
       <button
-        onClick={toggleAddTaskModal}
+        onClick={handleOpenModal}
         className="flex items-center gap-2 border p-4 rounded-md text-left text-zinc-500 font-semibold"
       >
         <Plus className="h-3 w-3" />
