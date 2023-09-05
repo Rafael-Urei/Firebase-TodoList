@@ -57,7 +57,7 @@ export const Menu = ({ children }: IProps) => {
     <>
       <div className="h-screen">
         {isOpen ? (
-          <motion.div className="relative flex flex-col gap-4 h-full flex-1 p-4 bg-zinc-100 rounded-md text-zinc-700">
+          <motion.div className="relative flex flex-col gap-4 h-full flex-1 p-4 bg-zinc-100 rounded-md text-zinc-500 scale-95 dark:bg-zinc-700">
             <header className="w-full flex flex-col gap-4">
               <h1 className="font-bold text-xl">Menu</h1>
               <form className="px-2 flex w-full h-9 border rounded-md items-center">

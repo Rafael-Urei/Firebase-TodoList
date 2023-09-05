@@ -11,7 +11,7 @@ import { TaskMenu } from "./shared/components/EditTaskMenu/TaskMenu";
 
 export const App = () => {
   return (
-    <div className="flex bg-slate-50 w-screen">
+    <div className="flex bg-slate-50 w-screen dark:bg-zinc-800">
       <AppAuthProvider>
         <AppTasksProvider>
           <AppTaskMenuProvider>

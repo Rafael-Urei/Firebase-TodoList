@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Divider } from "../../../shared/components/Divider/Divider";
 import { useAppAuthContext } from "../../../shared/contexts/AuthContext/Auth";
-import { X, ChevronLeft, Moon } from "lucide-react";
+import { X, ChevronLeft } from "lucide-react";
 import { User, sendEmailVerification } from "firebase/auth";
 import { auth } from "../../../shared/config/Firebase";
 import { motion } from "framer-motion";
@@ -11,28 +11,12 @@ export const Profile = () => {
   const { currentUser } = useAppAuthContext();
   const navigate = useNavigate();
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
-  const [imageSrc, setImageSrc] = useState<
-    string | null | undefined | ArrayBuffer
-  >();
   const [changeProfile, setChangeProfile] = useState<boolean>(false);
 
   const handleVerifyEmail = async () => {
     await sendEmailVerification(auth.currentUser as User).then(() => {
       setShowPopUp((prev) => !prev);
     });
-  };
-
-  const handleChooseImage = (e: any) => {
-    const file = e.target.files[0];
-    console.log(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = (event) => {
-        const readerTarget = event.target;
-        setImageSrc(readerTarget?.result);
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   const animation = {
@@ -62,11 +46,7 @@ export const Profile = () => {
         </div>
         <div className="flex flex-col gap-4 shadow-md bg-slate-50 h-2/3 w-96 rounded-md items-center justify-center py-5">
           <label className="flex h-24 w-24 bg-slate-200 rounded-full items-center justify-center cursor-pointer">
-            <input
-              type="file"
-              className="hidden"
-              onChange={(e) => handleChooseImage(e)}
-            />
+            <input type="file" className="hidden" />
             <span className="text-[10px] w-full text-center font-medium text-slate-600">
               {}
             </span>
@@ -112,10 +92,6 @@ export const Profile = () => {
             </>
           ) : (
             <>
-              <div className="flex gap-2 text-slate-600 text-sm items-center justify-center cursor-pointer my-4">
-                <Moon />
-                <p>Change theme</p>
-              </div>
               {!currentUser?.emailVerified ? (
                 <div>
                   <p className="italic text-pink-500 text-xs">

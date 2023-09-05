@@ -40,7 +40,7 @@ export const TasksList = ({ day }: ITasksLayout) => {
               className={
                 task.done
                   ? "flex flex-col border-b-2 border-slate-100 h-20 justify-center opacity-50 cursor-pointer"
-                  : "flex flex-col border-b-2 border-slate-100 h-20 justify-center cursor-pointer"
+                  : "flex flex-col border-b-2 border-slate-100 h-20 justify-center cursor-pointer dark:text-zinc-200 dark:border-zinc-600"
               }
               onClick={() => handleEditDeleteTask(task)}
             >

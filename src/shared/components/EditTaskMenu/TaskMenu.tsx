@@ -2,14 +2,14 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useAppTaskMenuContext } from "../../contexts/TaskMenuContext/TaskMenuContext";
 import { useAppTaskContext } from "../../contexts/TasksContext/TasksContext";
 import { z } from "zod";
-import { format } from "date-fns";
+import { format, startOfToday } from "date-fns";
 import { useAppCalendarContext } from "../../contexts/CalendarContext/CalendarContext";
 import { CalendarComponent } from "..";
 import { db } from "../../config/Firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { useAppAuthContext } from "../../contexts/AuthContext/Auth";
 import { X } from "lucide-react";
-import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 interface IFormData {
   title: string;
@@ -31,19 +31,21 @@ const TaskSchema = z.object({
 
 const typeList = ["Work", "Study", "Trip", "Personal"];
 
-export const animation = {
-  initial: { opacity: 1, x: 300 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -100 },
-};
-
 export const TaskMenu = () => {
   type TaskSchemaData = z.infer<typeof TaskSchema>;
   const { currentUser } = useAppAuthContext();
   const { isOpen, toggleTaskMenu } = useAppTaskMenuContext();
-  const { inputValue, toggleCalendar } = useAppCalendarContext();
+  const { inputValue, toggleCalendar, setInputValue } = useAppCalendarContext();
   const { selectedTask, setTasks, tasks } = useAppTaskContext();
-  const { register, handleSubmit } = useForm<TaskSchemaData>();
+  console.log(selectedTask);
+  const { register, handleSubmit, formState, reset } = useForm<TaskSchemaData>({
+    defaultValues: {
+      title: "",
+      description: "",
+      date: "",
+      type: "",
+    },
+  });
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
     data.date = inputValue.toISOString();
@@ -73,26 +75,32 @@ export const TaskMenu = () => {
       .finally(() => toggleTaskMenu(false));
   };
 
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({
+        title: "",
+        description: "",
+        date: "",
+        type: "",
+      });
+    }
+  }, [formState, reset]);
+
   const handleDeleteTask = async () => {
     await deleteDoc(
       doc(db, "users", `${currentUser?.uid}`, "tasks", selectedTask.id)
     )
       .then(() => setTasks(tasks.filter((task) => task.id !== selectedTask.id)))
       .catch((e) => console.log(e))
-      .finally(() => toggleTaskMenu(false));
+      .finally(() => {
+        toggleTaskMenu(false), setInputValue(startOfToday());
+      });
   };
 
   return (
     <>
       {isOpen && (
-        <motion.div
-          variants={animation}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={{ duration: 0.3 }}
-          className="relative h-screen w-2/3 border scale-95 rounded-md p-5"
-        >
+        <div className="relative h-screen w-2/3 border scale-95 rounded-md p-5 dark:bg-zinc-700 dark:border-none">
           <button
             type="button"
             className="absolute right-4"
@@ -108,19 +116,17 @@ export const TaskMenu = () => {
             onSubmit={handleSubmit(onSubmit)}
           >
             <input
-              className="bg-transparent border rounded h-9 px-2"
+              className="bg-transparent border rounded h-9 px-2 dark:border-none dark:bg-zinc-800 dark:text-zinc-300"
               {...register("title")}
-              placeholder={selectedTask.title}
             ></input>
             <textarea
-              className="bg-transparent border rounded p-2"
+              className="bg-transparent border rounded p-2 dark:border-none dark:bg-zinc-800 dark:text-zinc-300"
               {...register("description")}
-              placeholder={selectedTask.description}
             ></textarea>
             <div className="flex gap-2 items-center">
               <label>Type:</label>
               <select
-                className="bg-transparent border p-2 rounded"
+                className="bg-transparent border p-2 rounded dark:border-none dark:bg-zinc-800 dark:text-zinc-300"
                 {...register("type")}
               >
                 <option>{selectedTask.type}</option>
@@ -131,10 +137,10 @@ export const TaskMenu = () => {
                 })}
               </select>
             </div>
-            <div className="flex w-full gap-2 items-center">
+            <div className="flex w-full gap-2 items-center ">
               <label>Due date:</label>
               <input
-                className="w-28 bg-transparent border text-center rounded h-9"
+                className="w-28 bg-transparent border text-center rounded h-9 dark:border-none dark:bg-zinc-800 text-zinc-300"
                 onClick={toggleCalendar}
                 {...register("date")}
                 value={format(inputValue, "MM/dd/yyyy")}
@@ -146,7 +152,7 @@ export const TaskMenu = () => {
             <div className="w-full flex gap-2 items-center justify-center font-semibold">
               <button
                 type="button"
-                className="flex-1 bg-transparent border h-12 rounded-md"
+                className="flex-1 bg-transparent border h-12 rounded-md dark:text-zinc-300"
                 onClick={handleDeleteTask}
               >
                 Delete
@@ -159,7 +165,7 @@ export const TaskMenu = () => {
               </button>
             </div>
           </form>
-        </motion.div>
+        </div>
       )}
     </>
   );

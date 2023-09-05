@@ -4,6 +4,8 @@ import { ToggleMenu } from "../components";
 import { useAppMenuContext } from "../contexts/MenuContext/MenuContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/Firebase";
+import { useAppCalendarContext } from "../contexts/CalendarContext/CalendarContext";
+import { useAppTaskMenuContext } from "../contexts/TaskMenuContext/TaskMenuContext";
 
 interface IBasicLayoutProps {
   children: React.ReactNode;
@@ -12,20 +14,42 @@ interface IBasicLayoutProps {
 
 export const DashboardLayout = ({ title, children }: IBasicLayoutProps) => {
   const navigate = useNavigate();
-  const { isOpen } = useAppMenuContext();
+  const { isOpen, toggleMenu } = useAppMenuContext();
+  const { isOpen: CalendarOpen, toggleCalendar } = useAppCalendarContext();
+  const { isOpen: TaskMenuOpen, toggleTaskMenu } = useAppTaskMenuContext();
+
+  const handleSignOut = () => {
+    try {
+      if (isOpen) {
+        toggleMenu();
+      }
+      if (CalendarOpen) {
+        toggleCalendar();
+      }
+      if (TaskMenuOpen) {
+        toggleTaskMenu(false);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      signOut(auth);
+    }
+  };
 
   return (
     <>
-      <div className="h-full bg-zinc-50 flex flex-col text-zinc-700 ml-6">
+      <div className="h-full bg-zinc-50 flex flex-col text-zinc-700 ml-6 dark:bg-zinc-800 p-4">
         <div className="flex items-start">
           <div className={!isOpen ? "mt-6 mr-6 ml-2" : "mt-6"}>
             <ToggleMenu></ToggleMenu>
           </div>
-          <div className="flex-1">
-            <header className="bg-zinc-50 p-4 rounded flex items-center gap-4 justify-between">
+          <div className="flex-1 ">
+            <header className="bg-zinc-50 p-4 rounded flex items-center gap-4 justify-between dark:bg-zinc-700">
               <div className="flex items-center justify-center gap-4">
-                <h1 className="text-4xl text-zinc-700 font-bold">{title}</h1>
-                <div className="h-9 w-9 border bg-zinc-50 flex items-center justify-center font-bold">
+                <h1 className="text-4xl text-zinc-700 font-bold dark:text-zinc-400">
+                  {title}
+                </h1>
+                <div className="h-9 w-9 border bg-zinc-50 flex items-center justify-center font-bold dark:bg-zinc-700 text-zinc-400">
                   0
                 </div>
               </div>
@@ -39,7 +63,7 @@ export const DashboardLayout = ({ title, children }: IBasicLayoutProps) => {
                 <Link
                   className="text-slate-500 text-sm"
                   to="/login"
-                  onClick={() => signOut(auth)}
+                  onClick={handleSignOut}
                 >
                   Sign Out
                 </Link>

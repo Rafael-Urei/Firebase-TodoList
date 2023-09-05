@@ -49,7 +49,10 @@ export const CalendarComponent = () => {
 
   return (
     <>
-      <div className="self-center w-full border-blue-400 bg-slate-50 scale-75 h-auto border py-4 rounded-md flex flex-col justify-center">
+      <div
+        className="self-center w-full border-blue-400 bg-slate-50 scale-75 h-auto border py-4 rounded-md flex flex-col justify-center
+       dark:bg-zinc-800 border-none "
+      >
         <button
           className="absolute top-3 right-3"
           type="button"
@@ -82,7 +85,7 @@ export const CalendarComponent = () => {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-7 my-4 text-center text-slate-300">
+        <div className="grid grid-cols-7 my-4 text-center text-slate-300 dark:text-zinc-500">
           <div>S</div>
           <div>M</div>
           <div>T</div>
@@ -100,8 +103,8 @@ export const CalendarComponent = () => {
                   index === 0
                     ? `${
                         colStart[dayOfWeek + 1]
-                      } flex border-t py-2 items-center justify-center`
-                    : `flex border-t py-2 items-center justify-center`
+                      } flex border-t py-2 items-center justify-center dark:border-zinc-500`
+                    : `flex border-t py-2 items-center justify-center dark:border-zinc-500`
                 }
               >
                 <button
@@ -111,8 +114,8 @@ export const CalendarComponent = () => {
                     isEqual(day, selectedDay)
                       ? "bg-blue-500 text-slate-50 h-8 w-8 rounded-full duration-200"
                       : isEqual(day, selectedDay) && !isToday(day)
-                      ? "hover:bg-slate-200 text-slate-700 h-8 w-8 rounded-full duration-200 bg-black"
-                      : "hover:bg-slate-200 text-slate-700 h-8 w-8 rounded-full duration-200"
+                      ? "hover:bg-slate-200 text-slate-700 h-8 w-8 rounded-full duration-200 bg-black dark:text-zinc-400"
+                      : "hover:bg-slate-200 text-slate-700 h-8 w-8 rounded-full duration-200 dark:text-zinc-400"
                   }
                 >
                   <time dateTime={format(day, "yyyy/MM/dd")}>
