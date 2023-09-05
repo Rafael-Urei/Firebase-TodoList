@@ -113,6 +113,7 @@ export const AddTask = () => {
                 <option>Work</option>
                 <option>Study</option>
                 <option>Trip</option>
+                <option>Personal</option>
               </select>
             </div>
             {errors.type && (

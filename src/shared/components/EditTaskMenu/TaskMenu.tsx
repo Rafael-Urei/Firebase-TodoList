@@ -8,6 +8,8 @@ import { CalendarComponent } from "..";
 import { db } from "../../config/Firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { useAppAuthContext } from "../../contexts/AuthContext/Auth";
+import { X } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface IFormData {
   title: string;
@@ -28,6 +30,12 @@ const TaskSchema = z.object({
 });
 
 const typeList = ["Work", "Study", "Trip", "Personal"];
+
+export const animation = {
+  initial: { opacity: 1, x: 300 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -100 },
+};
 
 export const TaskMenu = () => {
   type TaskSchemaData = z.infer<typeof TaskSchema>;
@@ -50,7 +58,7 @@ export const TaskMenu = () => {
     await updateDoc(docRef, {
       ...data,
     })
-      .then((response) =>
+      .then(() =>
         setTasks(
           tasks.map((task) => {
             if (task.id === selectedTask.id) {
@@ -62,25 +70,37 @@ export const TaskMenu = () => {
         )
       )
       .catch((e) => console.log(e))
-      .finally(toggleTaskMenu);
+      .finally(() => toggleTaskMenu(false));
   };
 
   const handleDeleteTask = async () => {
     await deleteDoc(
       doc(db, "users", `${currentUser?.uid}`, "tasks", selectedTask.id)
     )
-      .then((response) =>
-        setTasks(tasks.filter((task) => task.id !== selectedTask.id))
-      )
+      .then(() => setTasks(tasks.filter((task) => task.id !== selectedTask.id)))
       .catch((e) => console.log(e))
-      .finally(toggleTaskMenu);
+      .finally(() => toggleTaskMenu(false));
   };
 
   return (
     <>
       {isOpen && (
-        <div className="h-screen w-2/3 border scale-95 rounded-md p-5">
-          <h1 className="font-bold text-slate-500 mb-10">
+        <motion.div
+          variants={animation}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.3 }}
+          className="relative h-screen w-2/3 border scale-95 rounded-md p-5"
+        >
+          <button
+            type="button"
+            className="absolute right-4"
+            onClick={() => toggleTaskMenu(false)}
+          >
+            <X className="text-violet-600" />
+          </button>
+          <h1 className="font-bold text-slate-500 mb-10 text-xl">
             {selectedTask.title}
           </h1>
           <form
@@ -139,7 +159,7 @@ export const TaskMenu = () => {
               </button>
             </div>
           </form>
-        </div>
+        </motion.div>
       )}
     </>
   );

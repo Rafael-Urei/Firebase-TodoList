@@ -5,17 +5,24 @@ import {
 } from "../contexts/TasksContext/TasksContext";
 import { format } from "date-fns";
 import { useAppTaskMenuContext } from "../contexts/TaskMenuContext/TaskMenuContext";
+import { motion } from "framer-motion";
 
 interface ITasksLayout {
   day: string;
 }
+
+export const animation = {
+  initial: { opacity: 1, x: -100 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0 },
+};
 
 export const TasksList = ({ day }: ITasksLayout) => {
   const { tasks, setSelectedTask } = useAppTaskContext();
   const { toggleTaskMenu } = useAppTaskMenuContext();
 
   const handleEditDeleteTask = (task: FormData) => {
-    toggleTaskMenu();
+    toggleTaskMenu(true);
     setSelectedTask(task);
   };
   return (
@@ -24,7 +31,11 @@ export const TasksList = ({ day }: ITasksLayout) => {
         const date = new Date(task.date);
         if (task.date === day) {
           return (
-            <li
+            <motion.li
+              variants={animation}
+              initial="initial"
+              animate="animate"
+              exit="exit"
               key={task.id}
               className={
                 task.done
@@ -75,7 +86,7 @@ export const TasksList = ({ day }: ITasksLayout) => {
                   </h2>
                 </div>
               </div>
-            </li>
+            </motion.li>
           );
         } else {
           return;

@@ -2,7 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --main-scrollbar-color: #3c126b54;
+}
+
+html {
+  min-height: 100vh;
+}
+
+body {
+  min-height: 100%;
+}
+
 * {
   font-family: "Inter", sans-serif;
   outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: var(--main-scrollbar-color);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
