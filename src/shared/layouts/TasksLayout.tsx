@@ -19,10 +19,10 @@ export const animation = {
 
 export const TasksList = ({ day }: ITasksLayout) => {
   const { tasks, setSelectedTask } = useAppTaskContext();
-  const { toggleTaskMenu } = useAppTaskMenuContext();
+  const { toggleTaskMenu, isOpen } = useAppTaskMenuContext();
 
   const handleEditDeleteTask = (task: FormData) => {
-    toggleTaskMenu(true);
+    toggleTaskMenu(!isOpen);
     setSelectedTask(task);
   };
   return (

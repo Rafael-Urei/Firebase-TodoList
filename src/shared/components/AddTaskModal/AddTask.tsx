@@ -34,7 +34,7 @@ const animation = {
 
 export const AddTask = () => {
   const { isOpen, toggleCalendar, inputValue } = useAppCalendarContext();
-  const { setTasks } = useAppTaskContext();
+  const { setTasks, tasks } = useAppTaskContext();
   const { toggleAddTaskModal } = useAppAddModalContext();
   const { currentUser } = useAppAuthContext();
   const {
@@ -50,13 +50,7 @@ export const AddTask = () => {
       ...data,
       done: false,
     }).then((response) =>
-      setTasks((prev) => {
-        {
-          {
-            return [...prev, { ...data, done: false, id: response.id }];
-          }
-        }
-      })
+      setTasks([...tasks, { ...data, done: false, id: response.id }])
     );
     toggleAddTaskModal();
   };

@@ -6,6 +6,9 @@ import { signOut } from "firebase/auth";
 import { auth } from "../config/Firebase";
 import { useAppCalendarContext } from "../contexts/CalendarContext/CalendarContext";
 import { useAppTaskMenuContext } from "../contexts/TaskMenuContext/TaskMenuContext";
+import { useAppTaskContext } from "../contexts/TasksContext/TasksContext";
+import { startOfToday, startOfTomorrow } from "date-fns";
+import { useAppAuthContext } from "../contexts/AuthContext/Auth";
 
 interface IBasicLayoutProps {
   children: React.ReactNode;
@@ -13,6 +16,16 @@ interface IBasicLayoutProps {
 }
 
 export const DashboardLayout = ({ title, children }: IBasicLayoutProps) => {
+  const { tasks } = useAppTaskContext();
+  const { currentUser } = useAppAuthContext();
+
+  const todayTasks = tasks.filter(
+    (task) => task.date === startOfToday().toISOString()
+  );
+  const tomorrowTasks = tasks.filter(
+    (task) => task.date === startOfTomorrow().toISOString()
+  );
+
   const navigate = useNavigate();
   const { isOpen, toggleMenu } = useAppMenuContext();
   const { isOpen: CalendarOpen, toggleCalendar } = useAppCalendarContext();
@@ -50,7 +63,11 @@ export const DashboardLayout = ({ title, children }: IBasicLayoutProps) => {
                   {title}
                 </h1>
                 <div className="h-9 w-9 border bg-zinc-50 flex items-center justify-center font-bold dark:bg-zinc-700 text-zinc-400">
-                  0
+                  {title === "Today"
+                    ? todayTasks.length
+                    : title === "Upcoming"
+                    ? todayTasks.length + tomorrowTasks.length
+                    : 0}
                 </div>
               </div>
               <div className="flex gap-4 items-center justify-center">
@@ -58,8 +75,12 @@ export const DashboardLayout = ({ title, children }: IBasicLayoutProps) => {
                   className="rounded-full h-10 w-10 bg-slate-600 cursor-pointer"
                   onClick={() => navigate("/profile")}
                 >
-                  <img />
+                  <img
+                    className="rounded-full"
+                    src={auth.currentUser?.photoURL?.toString()}
+                  />
                 </div>
+                <p>{currentUser?.displayName}</p>
                 <Link
                   className="text-slate-500 text-sm"
                   to="/login"

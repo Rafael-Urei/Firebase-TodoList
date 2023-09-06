@@ -8,8 +8,8 @@ import { CalendarComponent } from "..";
 import { db } from "../../config/Firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { useAppAuthContext } from "../../contexts/AuthContext/Auth";
-import { X } from "lucide-react";
-import { useEffect } from "react";
+import { Check, Edit, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface IFormData {
   title: string;
@@ -30,21 +30,33 @@ const TaskSchema = z.object({
 });
 
 const typeList = ["Work", "Study", "Trip", "Personal"];
+interface IModalState {
+  delete: boolean;
+  save: boolean;
+}
+
+export const initialState: IModalState = {
+  delete: false,
+  save: false,
+};
 
 export const TaskMenu = () => {
   type TaskSchemaData = z.infer<typeof TaskSchema>;
+  const [titleInput, setTitleInput] = useState(false);
   const { currentUser } = useAppAuthContext();
   const { isOpen, toggleTaskMenu } = useAppTaskMenuContext();
   const { inputValue, toggleCalendar, setInputValue } = useAppCalendarContext();
   const { selectedTask, setTasks, tasks } = useAppTaskContext();
-  console.log(selectedTask);
-  const { register, handleSubmit, formState, reset } = useForm<TaskSchemaData>({
-    defaultValues: {
-      title: "",
-      description: "",
-      date: "",
-      type: "",
-    },
+  const {
+    register,
+    handleSubmit,
+    formState,
+    reset,
+    setValue,
+    setFocus,
+    getValues,
+  } = useForm<TaskSchemaData>({
+    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
@@ -74,6 +86,11 @@ export const TaskMenu = () => {
       .catch((e) => console.log(e))
       .finally(() => toggleTaskMenu(false));
   };
+
+  useEffect(() => {
+    setValue("title", selectedTask.title);
+    setFocus("title");
+  }, [selectedTask.title]);
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -108,21 +125,41 @@ export const TaskMenu = () => {
           >
             <X className="text-violet-600" />
           </button>
-          <h1 className="font-bold text-slate-500 mb-10 text-xl">
-            {selectedTask.title}
-          </h1>
           <form
-            className="flex flex-col w-full gap-2"
+            className="flex flex-col w-full gap-2 mt-10"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <input
-              className="bg-transparent border rounded h-9 px-2 dark:border-none dark:bg-zinc-800 dark:text-zinc-300"
-              {...register("title")}
-            ></input>
+            <div className="w-full flex gap-3 items-center">
+              <input
+                type="text"
+                className={
+                  titleInput
+                    ? "bg-transparent border duration-200 rounded px-2 py-2 flex items-center "
+                    : "bg-transparent rounded duration-200 px-2 py-2 flex items-center text-xl font-bold"
+                }
+                {...register("title")}
+                disabled={!titleInput ? true : false}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setTitleInput((prev) => !prev);
+                  const result = getValues("title");
+                  setValue("title", result);
+                }}
+              >
+                {!titleInput ? (
+                  <Edit className="h-5 w-5 text-slate-500" />
+                ) : (
+                  <Check className="h-5 w-5 text-slate-500" />
+                )}
+              </button>
+            </div>
             <textarea
-              className="bg-transparent border rounded p-2 dark:border-none dark:bg-zinc-800 dark:text-zinc-300"
+              className="bg-transparent border rounded p-2 dark:border-none dark:bg-zinc-800 dark:text-zinc-300 flex-1"
               {...register("description")}
             ></textarea>
+
             <div className="flex gap-2 items-center">
               <label>Type:</label>
               <select
@@ -143,7 +180,8 @@ export const TaskMenu = () => {
                 className="w-28 bg-transparent border text-center rounded h-9 dark:border-none dark:bg-zinc-800 text-zinc-300"
                 onClick={toggleCalendar}
                 {...register("date")}
-                value={format(inputValue, "MM/dd/yyyy")}
+                value={format(inputValue, "yyyy/MM/dd")}
+                disabled
               />
             </div>
             <div className="flex items-center justify-center">
