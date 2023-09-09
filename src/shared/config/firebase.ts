@@ -39,7 +39,7 @@ export async function SignIn(
   try {
     setLoading(true);
     await signInWithEmailAndPassword(auth, data.email, data.password);
-    navigate("/upcoming");
+    navigate("/dashboard");
   } catch (error) {
     console.log(error);
     setLoading(false);

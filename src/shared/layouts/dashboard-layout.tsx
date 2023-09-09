@@ -45,7 +45,7 @@ export default function DashboardLayout({
             </p>
           </div>
         </header>
-        <div className="flex-1 flex flex-wrap p-10 bg-slate-200">
+        <div className="flex-1 flex flex-wrap p-10 gap-4 bg-zinc-100 rounded">
           {children}
         </div>
       </div>

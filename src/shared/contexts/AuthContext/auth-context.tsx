@@ -39,7 +39,7 @@ export const AppAuthProvider = ({ children }: IProps) => {
       <AuthContext.Provider
         value={{ currentUser, loading, setLoading: handleLoading }}
       >
-        {children}''
+        {children}
       </AuthContext.Provider>
     </>
   );

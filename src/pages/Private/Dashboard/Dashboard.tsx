@@ -1,9 +1,14 @@
+import { useAppTasksContext } from "../../../shared/contexts/Tasks/tasks-context";
 import DashboardLayout from "../../../shared/layouts/dashboard-layout";
+import Paper from "./components/paper";
 
 export default function Dashboard() {
+  const { todayTasks, tomorrowTasks } = useAppTasksContext();
   return (
-    <DashboardLayout title="Upcoming">
-      <div className="flex h-96 w-96 rounded bg-slate-50"></div>
+    <DashboardLayout title="Dashboard">
+      <Paper title="Upcoming">0</Paper>
+      <Paper title="Today">{todayTasks.length}</Paper>
+      <Paper title="Tomorrow">{tomorrowTasks.length}</Paper>
     </DashboardLayout>
   );
 }

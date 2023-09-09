@@ -5,10 +5,10 @@ import Register from "../pages/Register/register";
 import { useAppAuthContext } from "../shared/contexts/AuthContext/auth-context";
 import Dashboard from "../pages/Private/Dashboard/Dashboard";
 import { Profile } from "../pages/Private/Profile/Profile";
-// import { Today } from "../pages/Private/Dashboard/Today";
 import { useEffect } from "react";
 import { useAppMenuContext } from "../shared/contexts/MenuContext/menu-context";
 import { GanttChart, ListChecks } from "lucide-react";
+import Today from "../pages/Private/Today/today";
 
 export const AppRoutes = () => {
   const { currentUser }: any = useAppAuthContext();
@@ -21,8 +21,8 @@ export const AppRoutes = () => {
         icon: <ListChecks />,
       },
       {
-        label: "Upcoming",
-        path: "/upcoming",
+        label: "Dashboard",
+        path: "/dashboard",
         icon: <GanttChart />,
       },
     ]);
@@ -34,8 +34,8 @@ export const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Navigate to="/home" />} />
-        {currentUser && <Route path="/upcoming" element={<Dashboard />} />}
-        {/* {currentUser && <Route path="/today" element={<Today />} />} */}
+        {currentUser && <Route path="/dashboard" element={<Dashboard />} />}
+        {currentUser && <Route path="/today" element={<Today />} />}
         {currentUser && <Route path="/profile" element={<Profile />} />}
       </Routes>
     </>
