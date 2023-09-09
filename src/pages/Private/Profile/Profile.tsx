@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Divider } from "../../../shared/components/Divider/Divider";
-import { useAppAuthContext } from "../../../shared/contexts/AuthContext/Auth";
+import { useAppAuthContext } from "../../../shared/contexts/AuthContext/auth-context";
 import { X, ChevronLeft } from "lucide-react";
 import { User, sendEmailVerification, updateProfile } from "firebase/auth";
-import { auth } from "../../../shared/config/Firebase";
+import { auth } from "../../../shared/config/firebase";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";

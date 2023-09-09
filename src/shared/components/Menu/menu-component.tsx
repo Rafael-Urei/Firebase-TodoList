@@ -1,10 +1,10 @@
 import { X, Search, ChevronRight } from "lucide-react";
-import { useAppMenuContext } from "../../contexts/MenuContext/MenuContext";
+import { useAppMenuContext } from "../../contexts/MenuContext/menu-context";
 import { motion } from "framer-motion";
 import { ReactNode, useState } from "react";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
-import { useAppTaskContext } from "../../contexts/TasksContext/TasksContext";
-import { useAppTaskMenuContext } from "../../contexts/TaskMenuContext/TaskMenuContext";
+// import { useAppTaskContext } from "../../contexts/TasksContext/TasksContext";
+import { useAppTaskMenuContext } from "../../contexts/TaskMenuContext/task-menu-context";
 
 interface IProps {
   children: React.ReactNode;
@@ -43,15 +43,15 @@ const ListWithRoutes = ({ to, label, onClick, icon }: LinkRouteProps) => {
 
 export const Menu = ({ children }: IProps) => {
   const { isOpen, toggleMenu, menuOptions } = useAppMenuContext();
-  const { tasks, setSelectedTask } = useAppTaskContext();
+  // const { tasks, setSelectedTask } = useAppTaskContext();
   const { toggleTaskMenu } = useAppTaskMenuContext();
   const [search, setSearch] = useState("");
-  const filteredTasks = tasks.filter((task) => task.title.includes(search));
+  // const filteredTasks = tasks.filter((task) => task.title.includes(search));
 
-  const handleOpenEditTask = (task: any) => {
-    setSelectedTask(task);
-    toggleTaskMenu(true);
-  };
+  // const handleOpenEditTask = (task: any) => {
+  //   setSelectedTask(task);
+  //   toggleTaskMenu(true);
+  // };
 
   return (
     <>
@@ -83,7 +83,7 @@ export const Menu = ({ children }: IProps) => {
             </ul>
             <h2 className="font-semibold mt-4">All Tasks</h2>
             <ul className="flex flex-col p-2 rounded w-full h-52 overflow-scroll">
-              {filteredTasks.map((task) => {
+              {/* {filteredTasks.map((task) => {
                 return (
                   <div
                     key={task.id}
@@ -107,7 +107,7 @@ export const Menu = ({ children }: IProps) => {
                     <ChevronRight className="h-4 w-4 text-slate-400" />
                   </div>
                 );
-              })}
+              })} */}
             </ul>
             <button onClick={toggleMenu} className="absolute right-3">
               <X />

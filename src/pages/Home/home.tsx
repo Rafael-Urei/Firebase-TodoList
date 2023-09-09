@@ -1,10 +1,10 @@
-import { BaseLayout } from "../../shared/layouts/BaseLayout";
+import AuthLayout from "../../shared/layouts/auth-layout";
 import { Link } from "react-router-dom";
 
-export const Home = () => {
+export default function Home() {
   return (
     <>
-      <BaseLayout title="Welcome">
+      <AuthLayout title="Welcome">
         <div className="flex items-center justify-center h-full">
           <div className="flex flex-col text-zinc-200 gap-2">
             <h2 className="text-4xl m-2">Are you new here?</h2>
@@ -23,7 +23,7 @@ export const Home = () => {
             </div>
           </div>
         </div>
-      </BaseLayout>
+      </AuthLayout>
     </>
   );
-};
+}

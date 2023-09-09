@@ -12,7 +12,7 @@ import {
   startOfToday,
 } from "date-fns";
 import { useState } from "react";
-import { useAppCalendarContext } from "../../contexts/CalendarContext/CalendarContext";
+import { useAppCalendarContext } from "../../contexts/CalendarContext/calendar-context";
 
 export const CalendarComponent = () => {
   const { setInputValue, toggleCalendar } = useAppCalendarContext();
