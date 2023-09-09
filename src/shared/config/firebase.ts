@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { addDoc, getFirestore, collection } from "firebase/firestore";
 import { ILoginData } from "../../pages/Login/types";
 import { IRegisterData } from "../../pages/Register/types";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -74,3 +74,19 @@ export async function SignOut(navigate: (value: string) => void) {
     console.log(error);
   }
 }
+
+// export async function AddTask(data) {
+//   try {
+//     setLoading(true)
+//     const tasksRef = collection(db, "users", `${currentUser?.uid}`, "tasks");
+//     const result = await addDoc(tasksRef, {
+//       ...data,
+//       done: false,
+//     })
+//     setTasks(oldValue => [...oldValue, {...data, done: false, result.id}])
+//   } catch (error) {
+//     console.log(error)
+//   } finally {
+//     setLoading(false)
+//   }
+// }

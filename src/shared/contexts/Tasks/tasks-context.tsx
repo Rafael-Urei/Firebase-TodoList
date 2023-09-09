@@ -24,20 +24,22 @@ export function AppTasksProvider({ children }: IProps) {
   );
 
   useEffect(() => {
-    setLoading(true);
-    async function fetchData() {
-      const data = await getDocs(
-        collection(db, "users", `${currentUser?.uid}`, "tasks")
-      );
-      setTasks(
-        data.docs.map((task) => ({
-          ...task.data(),
-          id: task.id,
-        })) as ITasksData[]
-      );
-      setLoading(false);
+    if (currentUser) {
+      setLoading(true);
+      async function fetchData() {
+        const data = await getDocs(
+          collection(db, "users", `${currentUser?.uid}`, "tasks")
+        );
+        setTasks(
+          data.docs.map((task) => ({
+            ...task.data(),
+            id: task.id,
+          })) as ITasksData[]
+        );
+        setLoading(false);
+      }
+      fetchData();
     }
-    fetchData();
   }, []);
 
   if (loading) {

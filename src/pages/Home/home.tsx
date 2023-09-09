@@ -10,7 +10,7 @@ export default function Home() {
             <h2 className="text-4xl m-2">Are you new here?</h2>
             <div className="flex flex-col items-center">
               <button className="bg-blue-600 rounded p-1 w-full duration-150 hover:bg-blue-800 text-slate-50">
-                Register
+                <Link to="/register">Register</Link>
               </button>
               <p className="m-2 text-sm">Or</p>
               <Link
