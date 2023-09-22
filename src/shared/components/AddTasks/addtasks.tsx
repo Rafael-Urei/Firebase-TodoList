@@ -2,10 +2,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TaskSchema } from "./addtasks-schema";
 import { ITasksFormData } from "./types";
+import Input from "./components/Input";
 
 export default function AddTask() {
   const {
-    register,
     formState: { errors },
     handleSubmit,
   } = useForm<ITasksFormData>({ resolver: zodResolver(TaskSchema) });
@@ -17,8 +17,12 @@ export default function AddTask() {
   return (
     <div className="h-full w-full fixed flex items-center justify-center bg-opacity-30 bg-zinc-700 rounded">
       <div className="flex flex-col rounded w-96 h-auto bg-zinc-50">
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-          <input className="h-8 px-2" {...register("title")}></input>
+        <form
+          className="flex flex-col gap-2 p-4 rounded h-36"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Input label="Title" type="text" ref="title" />
+          <Input label="Description" type="number" ref="description" />
           {errors.title && <span>{errors.title.message}</span>}
         </form>
       </div>
