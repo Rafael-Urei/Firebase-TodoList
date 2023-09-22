@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Divider } from "../../../shared/components/Divider/Divider";
 import { useAppAuthContext } from "../../../shared/contexts/AuthContext/auth-context";
 import { X, ChevronLeft } from "lucide-react";
 import { User, sendEmailVerification, updateProfile } from "firebase/auth";
@@ -24,7 +23,6 @@ export const Profile = () => {
   const navigate = useNavigate();
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
   const [changeProfile, setChangeProfile] = useState<boolean>(false);
-  const [photo, setPhoto] = useState<any>();
   const {
     register,
     handleSubmit,
@@ -44,14 +42,11 @@ export const Profile = () => {
   };
 
   const handleUpdateProfile = async (data: IUpdateFormData) => {
-    console.log(data);
-    console.log(auth.currentUser);
     // const imageURL = URL.createObjectURL(photo);
     await updateProfile(auth?.currentUser as User, {
       displayName: data.username,
     });
     navigate("/upcoming");
-    console.log(auth.currentUser);
   };
 
   // const handleCHangePhoto = (e: any) => {
