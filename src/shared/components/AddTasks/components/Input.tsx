@@ -45,7 +45,8 @@ export default function Input({
           {label}
         </label>
         <input
-          autoComplete={false}
+          autoComplete="off"
+          autoCorrect="off"
           className="w-full px-4 bg-transparent z-10 h-full rounded"
           type="text"
           {...register(name)}
