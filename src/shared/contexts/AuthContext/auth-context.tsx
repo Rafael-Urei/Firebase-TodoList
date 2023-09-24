@@ -7,7 +7,7 @@ import {
 } from "react";
 import { auth } from "../../config/firebase";
 import { User } from "firebase/auth";
-import { Loading } from "../../components/Loading/loading-component";
+import { Loading } from "../../components/loading-component";
 import { IProps, IAuthData } from "./type";
 
 const AuthContext = createContext({} as IAuthData);

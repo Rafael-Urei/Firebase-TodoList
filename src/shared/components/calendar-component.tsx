@@ -1,4 +1,4 @@
-import "../../../styles/global.css";
+import "../../styles/global.css";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import {
   add,
@@ -12,7 +12,7 @@ import {
   startOfToday,
 } from "date-fns";
 import { useState } from "react";
-import { useAppCalendarContext } from "../../contexts/CalendarContext/calendar-context";
+import { useAppCalendarContext } from "../contexts/CalendarContext/calendar-context";
 
 export const CalendarComponent = () => {
   const { setInputValue, toggleCalendar } = useAppCalendarContext();

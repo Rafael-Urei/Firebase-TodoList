@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAppMenuContext } from "../../../shared/contexts/MenuContext/menu-context";
 
 interface IUpdateFormData {
   username: string;
@@ -19,6 +20,7 @@ const updateSchema = z.object({
 
 export const Profile = () => {
   type UpdateFormDataSchema = z.infer<typeof updateSchema>;
+  const { toggleMenu } = useAppMenuContext();
   const { currentUser } = useAppAuthContext();
   const navigate = useNavigate();
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
@@ -70,7 +72,13 @@ export const Profile = () => {
           </motion.div>
         )}
         <div className="flex absolute top-4 left-4">
-          <button type="button" onClick={() => navigate("/upcoming")}>
+          <button
+            type="button"
+            onClick={() => {
+              toggleMenu();
+              navigate("/dashboard");
+            }}
+          >
             <ChevronLeft />
           </button>
         </div>

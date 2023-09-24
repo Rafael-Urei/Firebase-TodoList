@@ -1,5 +1,5 @@
 import { X, Search } from "lucide-react";
-import { useAppMenuContext } from "../../contexts/MenuContext/menu-context";
+import { useAppMenuContext } from "../contexts/MenuContext/menu-context";
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";

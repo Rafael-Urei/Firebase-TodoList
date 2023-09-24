@@ -23,21 +23,23 @@ export default function Input({
     <>
       <div
         className={classNames(
-          "relative flex items-center justify-center bg-zinc-50 border border-gray-300 rounded h-10 duration 200",
+          "relative flex items-center justify-center bg-zinc-50 border border-gray-300 rounded h-10 duration 200 outline-1",
           {
-            "border-indigo-600": focused,
+            "border-indigo-600 outline outline-indigo-600":
+              focused && !errors?.[name],
             "w-32": size === "xs",
-            "border-rose-600": errors?.[name],
+            "border-pink-500 outline outline-pink-500":
+              errors?.[name] && focused,
+            "border-pink-300": errors?.[name] && !focused,
           }
         )}
       >
         <label
           className={classNames(
-            "absolute top-[6px] left-4 opacity-100 duration-200",
+            "absolute top-2 left-2 opacity-100 duration-200 text-sm",
             {
-              "absolute top-[-10px] left-2 bg-zinc-50 text-indigo-600 px-2 text-xs":
-                focused,
-              "text-rose-500": errors?.[name],
+              "top-[-10px] bg-zinc-50 text-indigo-600 px-2 text-xs": focused,
+              "text-pink-500": errors?.[name],
               "opacity-30": !focused,
             }
           )}
@@ -47,7 +49,7 @@ export default function Input({
         <input
           autoComplete="off"
           autoCorrect="off"
-          className="w-full px-4 bg-transparent z-10 h-full rounded"
+          className="w-full px-4 bg-transparent z-10 h-full rounded text-sm"
           type="text"
           {...register(name)}
           onFocus={() => setFocused(true)}
@@ -59,7 +61,7 @@ export default function Input({
         />
       </div>
       {errors?.[name] && (
-        <span className="text-rose-500 font-semibold text-xs">
+        <span className="text-pink-500 font-semibold text-xs">
           {errors?.[name]?.message}
         </span>
       )}

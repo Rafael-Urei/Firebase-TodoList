@@ -1,4 +1,4 @@
-import { useAppMenuContext } from "../../contexts/MenuContext/menu-context";
+import { useAppMenuContext } from "../contexts/MenuContext/menu-context";
 import { Menu } from "lucide-react";
 
 export const ToggleMenu = () => {

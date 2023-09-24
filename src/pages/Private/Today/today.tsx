@@ -1,37 +1,41 @@
 import { useAppTasksContext } from "../../../shared/contexts/Tasks/tasks-context";
-import classNames from "classnames";
 import DashboardLayout from "../../../shared/layouts/dashboard-layout";
-import AddTask from "../../../shared/components/AddTasks/addtasks";
+import { useState } from "react";
+import TaskForm from "../../../shared/components/TasksForm/tasksform";
+import Item from "../../../shared/components/task-item-component";
+import Button from "../../../shared/components/button-component";
 
 export default function Today() {
   const { todayTasks } = useAppTasksContext();
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
-      <AddTask />
+      {openModal && (
+        <>
+          <Button
+            type="button"
+            style="CLOSE_BUTTON"
+            onClick={() => setOpenModal(false)}
+          >
+            Close Modal
+          </Button>
+          <TaskForm></TaskForm>
+        </>
+      )}
       <DashboardLayout title="Today">
-        <ul className="list-none w-full">
+        <Button type="button" onClick={() => setOpenModal(true)}>
+          Create Task
+        </Button>
+        <ul className="list-none w-full flex flex-col gap-4">
           {todayTasks.map((task) => {
             return (
-              <li
+              <Item
                 key={task.id}
-                className="p-2 flex flex-col bg-zinc-50 w-full rounded gap-3"
-              >
-                <h1 className="font-semibold text-normal">{task.title}</h1>
-                <div className="flex bg-zinc-200 items-center px-2 gap-2">
-                  <div
-                    className={classNames(
-                      task.type === "Work" && "bg-rose-700 rounded h-3 w-3",
-                      task.type === "Study" && "bg-amber-700 rounded h-3 w-3",
-                      task.type === "Trip" && "bg-emerald-700 rounded h-3 w-3",
-                      task.type === "Personal" && "bg-sky-700 rounded h-3 w-3"
-                    )}
-                  ></div>
-                  <div className="flex rounded-md text-xs">
-                    <h2>{task.type}</h2>
-                  </div>
-                </div>
-              </li>
+                title={task.title}
+                type={task.type}
+                description={task.description}
+              ></Item>
             );
           })}
         </ul>

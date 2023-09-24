@@ -9,11 +9,12 @@ export default function DashboardLayout({
   title,
   children,
 }: IBasicLayoutProps) {
-  const { isOpen } = useAppMenuContext();
+  const { isOpen, toggleMenu } = useAppMenuContext();
   const { currentUser } = useAppAuthContext();
   const navigate = useNavigate();
 
   function handleSignOut() {
+    toggleMenu();
     SignOut(navigate);
   }
 
@@ -45,7 +46,7 @@ export default function DashboardLayout({
             </p>
           </div>
         </header>
-        <div className="flex-1 flex flex-wrap p-10 gap-4 bg-zinc-100 rounded">
+        <div className="flex flex-wrap p-10 gap-4 bg-zinc-100 rounded">
           {children}
         </div>
       </div>
