@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useAppMenuContext } from "../shared/contexts/MenuContext/menu-context";
 import { GanttChart, ListChecks } from "lucide-react";
 import Today from "../pages/Private/Today/today";
+import Tomorrow from "../pages/Private/Tomorrow/tomorrow";
 
 export const AppRoutes = () => {
   const { currentUser }: any = useAppAuthContext();
@@ -18,6 +19,11 @@ export const AppRoutes = () => {
       {
         label: "Today",
         path: "/today",
+        icon: <ListChecks />,
+      },
+      {
+        label: "Coming Tomorrow",
+        path: "/tomorrow",
         icon: <ListChecks />,
       },
       {
@@ -36,6 +42,7 @@ export const AppRoutes = () => {
         <Route path="*" element={<Navigate to="/home" />} />
         {currentUser && <Route path="/dashboard" element={<Dashboard />} />}
         {currentUser && <Route path="/today" element={<Today />} />}
+        {currentUser && <Route path="/tomorrow" element={<Tomorrow />} />}
         {currentUser && <Route path="/profile" element={<Profile />} />}
       </Routes>
     </>
