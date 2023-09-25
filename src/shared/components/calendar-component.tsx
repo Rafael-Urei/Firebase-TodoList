@@ -112,7 +112,7 @@ export const CalendarComponent = () => {
                   onClick={() => handleDays(day)}
                   className={
                     isEqual(day, selectedDay)
-                      ? "bg-blue-500 text-slate-50 h-8 w-8 rounded-full duration-200"
+                      ? "bg-indigo-600 text-slate-50 h-8 w-8 rounded-full duration-200"
                       : isEqual(day, selectedDay) && !isToday(day)
                       ? "hover:bg-slate-200 text-slate-700 h-8 w-8 rounded-full duration-200 bg-black dark:text-zinc-400"
                       : "hover:bg-slate-200 text-slate-700 h-8 w-8 rounded-full duration-200 dark:text-zinc-400"

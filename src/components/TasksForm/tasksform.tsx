@@ -11,6 +11,9 @@ import { X } from "lucide-react";
 import { AddTask } from "../../shared/config/firebase";
 import { ITasksData } from "../../shared/contexts/Tasks/types";
 import { useAppAuthContext } from "../../shared/contexts/AuthContext/auth-context";
+import { CalendarComponent } from "../../shared/components";
+import { useAppCalendarContext } from "../../shared/contexts/CalendarContext/calendar-context";
+import DateInput from "../../shared/components/date-input-component";
 
 type IProps = {
   handleModal: (value: boolean) => void;
@@ -19,6 +22,7 @@ type IProps = {
 export default function TaskForm({ handleModal }: IProps) {
   const { currentUser } = useAppAuthContext();
   const [loading, setLoading] = useState(false);
+  const { inputValue } = useAppCalendarContext();
   const options = ["study", "work", "trip", "personal"];
   const {
     register,
@@ -29,6 +33,7 @@ export default function TaskForm({ handleModal }: IProps) {
   } = useForm<ITasksFormData>({ resolver: zodResolver(TaskSchema) });
 
   const onSubmit: SubmitHandler<ITasksFormData> = (data: ITasksData) => {
+    data.date = inputValue.toISOString();
     AddTask(data, setLoading, `${currentUser?.uid}`);
     handleModal(false);
   };
@@ -63,14 +68,14 @@ export default function TaskForm({ handleModal }: IProps) {
           register={register}
           getValues={getValues}
         ></Input>
-        <Input
+        <DateInput
           name="date"
           label="Date"
-          size="xs"
           errors={errors}
           register={register}
           getValues={getValues}
-        ></Input>
+        />
+        <CalendarComponent />
         <Select
           name="type"
           options={options}

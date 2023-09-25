@@ -1,9 +1,9 @@
-import { useAppTasksContext } from "../../../shared/contexts/Tasks/tasks-context";
+import { useTasks } from "../../../shared/hooks/useTasks";
 import DashboardLayout from "../../../shared/layouts/dashboard-layout";
 import Paper from "./components/paper";
 
 export default function Dashboard() {
-  const { todayTasks, tomorrowTasks } = useAppTasksContext();
+  const { todayTasks, tomorrowTasks } = useTasks();
   return (
     <DashboardLayout title="Dashboard">
       <Paper title="Upcoming">0</Paper>

@@ -1,12 +1,12 @@
-import { useAppTasksContext } from "../../../shared/contexts/Tasks/tasks-context";
 import DashboardLayout from "../../../shared/layouts/dashboard-layout";
 import { useState } from "react";
 import TaskForm from "../../../components/TasksForm/tasksform";
 import Item from "../../../shared/components/task-item-component";
 import Button from "../../../shared/components/button-component";
+import { useTasks } from "../../../shared/hooks/useTasks";
 
 export default function Today() {
-  const { todayTasks } = useAppTasksContext();
+  const { todayTasks } = useTasks();
   const [openModal, setOpenModal] = useState(false);
 
   function handleModal(value: boolean) {
