@@ -10,6 +10,7 @@ import {
 import { addDoc, getFirestore, collection } from "firebase/firestore";
 import { ILoginData } from "../../pages/Login/types";
 import { IRegisterData } from "../../pages/Register/types";
+import { ITasksData } from "../contexts/Tasks/types";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -75,18 +76,23 @@ export async function SignOut(navigate: (value: string) => void) {
   }
 }
 
-// export async function AddTask(data) {
-//   try {
-//     setLoading(true)
-//     const tasksRef = collection(db, "users", `${currentUser?.uid}`, "tasks");
-//     const result = await addDoc(tasksRef, {
-//       ...data,
-//       done: false,
-//     })
-//     setTasks(oldValue => [...oldValue, {...data, done: false, result.id}])
-//   } catch (error) {
-//     console.log(error)
-//   } finally {
-//     setLoading(false)
-//   }
-// }
+export async function AddTask(
+  data: ITasksData,
+  setLoading: (value: boolean) => void,
+  id: string
+) {
+  try {
+    setLoading(true);
+    const tasksRef = collection(db, "users", id, "tasks");
+    const result = await addDoc(tasksRef, {
+      ...data,
+      done: false,
+    });
+    // setTasks(oldValue => [...oldValue, {...data, done: false, result.id}])
+  } catch (error) {
+    console.log(error);
+    setLoading(false);
+  } finally {
+    setLoading(false);
+  }
+}

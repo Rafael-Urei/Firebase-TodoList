@@ -1,14 +1,24 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import Input from "../input-component";
+import Input from "../../shared/components/input-component";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TaskSchema } from "./tasksform-schema";
 import { ITasksFormData } from "./types";
-import { useEffect } from "react";
-import Button from "../button-component";
-import Select from "../selector-component";
-import { Modal } from "../modal-component";
+import { useEffect, useState } from "react";
+import Button from "../../shared/components/button-component";
+import Select from "../../shared/components/selector-component";
+import { Modal } from "../../shared/components/modal-component";
+import { X } from "lucide-react";
+import { AddTask } from "../../shared/config/firebase";
+import { ITasksData } from "../../shared/contexts/Tasks/types";
+import { useAppAuthContext } from "../../shared/contexts/AuthContext/auth-context";
 
-export default function TaskForm() {
+type IProps = {
+  handleModal: (value: boolean) => void;
+};
+
+export default function TaskForm({ handleModal }: IProps) {
+  const { currentUser } = useAppAuthContext();
+  const [loading, setLoading] = useState(false);
   const options = ["study", "work", "trip", "personal"];
   const {
     register,
@@ -18,8 +28,9 @@ export default function TaskForm() {
     setFocus,
   } = useForm<ITasksFormData>({ resolver: zodResolver(TaskSchema) });
 
-  const onSubmit: SubmitHandler<ITasksFormData> = (data: any) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ITasksFormData> = (data: ITasksData) => {
+    AddTask(data, setLoading, `${currentUser?.uid}`);
+    handleModal(false);
   };
 
   useEffect(() => {
@@ -28,8 +39,14 @@ export default function TaskForm() {
 
   return (
     <Modal title="Create your Task">
+      <button
+        className="border-none bg-transparent absolute right-3 top-3"
+        onClick={() => handleModal(false)}
+      >
+        <X />
+      </button>
       <form
-        className="flex flex-col gap-4 h-auto p-10"
+        className="relative flex flex-col gap-4 h-auto p-10"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Input
