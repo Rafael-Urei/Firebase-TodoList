@@ -5,10 +5,15 @@ import { db } from "../config/firebase";
 import { ITasksData } from "../contexts/Tasks/types";
 import startOfToday from "date-fns/startOfToday";
 import startOfTomorrow from "date-fns/startOfTomorrow";
+import { nextMonday } from "date-fns";
 
 export function useTasks() {
   const { currentUser } = useAppAuthContext();
   const [tasks, setTasks] = useState<ITasksData[]>([]);
+  const nextWeek = nextMonday(startOfToday());
+  const nextWeekTasks = tasks.filter(
+    (task) => task.date === nextWeek.toISOString()
+  );
   const todayTasks = tasks.filter(
     (task) => task.date === startOfToday().toISOString()
   );
@@ -36,5 +41,6 @@ export function useTasks() {
     setTasks,
     todayTasks,
     tomorrowTasks,
+    nextWeekTasks,
   };
 }

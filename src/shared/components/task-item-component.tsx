@@ -22,10 +22,10 @@ export default function Item({ title, type, description }: Props) {
       <div className="flex rounded items-center p-2 gap-2 opacity-50">
         <div
           className={classNames("h-3 w-3 rounded-full bg-zinc-800", {
-            "bg-indigo-600": type === "Study",
-            "bg-pink-600": type === "Work",
-            "bg-emerald-600": type === "Personal",
-            "bg-sky-600": type === "Trip",
+            "bg-indigo-700": type === "Study",
+            "bg-pink-700": type === "Work",
+            "bg-emerald-700": type === "Personal",
+            "bg-sky-700": type === "Trip",
           })}
         ></div>
         <div className="flex rounded-md text-xs">

@@ -14,12 +14,11 @@ export default function DashboardLayout({
   const navigate = useNavigate();
 
   function handleSignOut() {
-    toggleMenu();
     SignOut(navigate);
   }
 
   return (
-    <div className="h-full bg-zinc-50 flex p-4 dark:bg-zinc-800 ">
+    <div className="h-full bg-zinc-50 flex p-4 dark:bg-zinc-800 overflow-scroll">
       <div className={!isOpen ? "mt-6 mr-6 ml-2" : "mt-6"}>
         <ToggleMenu></ToggleMenu>
       </div>
@@ -40,7 +39,14 @@ export default function DashboardLayout({
             </p>
             <p
               className="text-slate-500 text-xs cursor-pointer"
-              onClick={handleSignOut}
+              onClick={() => {
+                if (isOpen) {
+                  toggleMenu();
+                  handleSignOut();
+                } else {
+                  handleSignOut();
+                }
+              }}
             >
               Sign Out
             </p>

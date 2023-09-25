@@ -1,13 +1,12 @@
 import DashboardLayout from "../../../shared/layouts/dashboard-layout";
-import Item from "../../../shared/components/task-item-component";
-import TaskForm from "../../../components/TasksForm/tasksform";
-import Button from "../../../shared/components/button-component";
 import { useState } from "react";
-
+import TaskForm from "../../../components/TasksForm/tasksform";
+import Item from "../../../shared/components/task-item-component";
+import Button from "../../../shared/components/button-component";
 import { useTasks } from "../../../shared/hooks/useTasks";
 
-export default function Today() {
-  const { todayTasks } = useTasks();
+export default function NextWeek() {
+  const { nextWeekTasks } = useTasks();
   const [openModal, setOpenModal] = useState(false);
 
   function handleModal(value: boolean) {
@@ -17,13 +16,13 @@ export default function Today() {
   return (
     <>
       {openModal ? <TaskForm handleModal={handleModal}></TaskForm> : null}
-      <DashboardLayout title="Today">
+      <DashboardLayout title="Next Week">
         <Button type="button" onClick={() => setOpenModal(true)}>
           Create Task
         </Button>
         <ul className="list-none w-full flex flex-col gap-4">
-          {todayTasks.length !== 0 ? (
-            todayTasks.map((task) => {
+          {nextWeekTasks.length !== 0 ? (
+            nextWeekTasks.map((task) => {
               return (
                 <Item
                   key={task.id}
@@ -34,9 +33,7 @@ export default function Today() {
               );
             })
           ) : (
-            <p className="text-center text-lg font-semibold text-indigo-400 mt-5">
-              There are no tasks for today...
-            </p>
+            <p>There are no tasks for next week...</p>
           )}
         </ul>
       </DashboardLayout>
