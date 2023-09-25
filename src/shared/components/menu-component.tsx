@@ -1,8 +1,10 @@
 import { X, Search } from "lucide-react";
 import { useAppMenuContext } from "../contexts/MenuContext/menu-context";
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
+import classNames from "classnames";
+import { useAppTasksContext } from "../contexts/task-context";
 
 interface IProps {
   children: React.ReactNode;
@@ -41,7 +43,9 @@ const ListWithRoutes = ({ to, label, onClick, icon }: LinkRouteProps) => {
 
 export const Menu = ({ children }: IProps) => {
   const { isOpen, toggleMenu, menuOptions } = useAppMenuContext();
-
+  const [search, setSearch] = useState("");
+  const { tasks } = useAppTasksContext();
+  let filteredTasks = tasks.filter((tasks) => tasks.title.includes(search));
   return (
     <>
       <div className="h-screen">
@@ -55,6 +59,7 @@ export const Menu = ({ children }: IProps) => {
                   placeholder="Looking for a task?"
                   type="text"
                   className="bg-transparent p-3"
+                  onChange={(e) => setSearch(e.target.value)}
                 ></input>
               </form>
             </header>
@@ -70,7 +75,27 @@ export const Menu = ({ children }: IProps) => {
               ))}
             </ul>
             <h2 className="font-semibold mt-4">All Tasks</h2>
-            <ul className="flex flex-col p-2 rounded w-full h-52 overflow-scroll"></ul>
+            <ul className="flex flex-col p-2 rounded w-full h-52 overflow-scroll gap-2">
+              {filteredTasks.length !== 0
+                ? filteredTasks.map((task) => {
+                    return (
+                      <div
+                        key={task.id}
+                        className={classNames(
+                          "py-2 px-4 rounded-md bg-zinc-50 cursor-pointer duration-200 hover:bg-zinc-200",
+                          {
+                            "bg-pink-500 text-zinc-50 hover:bg-zinc-50 hover:text-zinc-700":
+                              task.type === "Work",
+                          }
+                        )}
+                      >
+                        {task.title.charAt(0).toLocaleUpperCase() +
+                          task.title.slice(1)}
+                      </div>
+                    );
+                  })
+                : []}
+            </ul>
             <button onClick={toggleMenu} className="absolute right-3">
               <X />
             </button>

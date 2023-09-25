@@ -1,9 +1,9 @@
-import { useTasks } from "../../../shared/hooks/useTasks";
+import { useAppTasksContext } from "../../../shared/contexts/task-context";
 import DashboardLayout from "../../../shared/layouts/dashboard-layout";
 import TaskPaper from "./components/tasks-paper";
 
 export default function Upcoming() {
-  const { todayTasks, tomorrowTasks, nextWeekTasks } = useTasks();
+  const { todayTasks, tomorrowTasks, nextWeekTasks } = useAppTasksContext();
   return (
     <>
       <DashboardLayout title="Upcoming">

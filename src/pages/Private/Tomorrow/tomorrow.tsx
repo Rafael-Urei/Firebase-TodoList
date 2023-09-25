@@ -3,10 +3,10 @@ import { useState } from "react";
 import TaskForm from "../../../components/TasksForm/tasksform";
 import Item from "../../../shared/components/task-item-component";
 import Button from "../../../shared/components/button-component";
-import { useTasks } from "../../../shared/hooks/useTasks";
+import { useAppTasksContext } from "../../../shared/contexts/task-context";
 
 export default function Tomorrow() {
-  const { tomorrowTasks } = useTasks();
+  const { tomorrowTasks } = useAppTasksContext();
   const [openModal, setOpenModal] = useState(false);
 
   function handleModal(value: boolean) {
