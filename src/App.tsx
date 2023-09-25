@@ -6,6 +6,7 @@ import { Menu } from "./shared/components";
 import { AppCalendarProvider } from "./shared/contexts/CalendarContext/calendar-context";
 import { AppTaskMenuProvider } from "./shared/contexts/TaskMenuContext/task-menu-context";
 import { AppTasksProvider } from "./shared/contexts/task-context";
+import EditTaskForm from "./components/EditTaskForm/edit-tasks-form";
 
 export const App = () => {
   return (
@@ -19,6 +20,7 @@ export const App = () => {
                   <Menu>
                     <AppRoutes></AppRoutes>
                   </Menu>
+                  <EditTaskForm />
                 </BrowserRouter>
               </AppMenuProvider>
             </AppCalendarProvider>

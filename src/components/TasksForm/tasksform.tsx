@@ -9,7 +9,7 @@ import Select from "../../shared/components/selector-component";
 import { Modal } from "../../shared/components/modal-component";
 import { X } from "lucide-react";
 import { AddTask } from "../../shared/config/firebase";
-import { ITasksData } from "../../shared/contexts/Tasks/types";
+import { ITasksData } from "../../shared/contexts/task-context";
 import { useAppAuthContext } from "../../shared/contexts/AuthContext/auth-context";
 import { CalendarComponent } from "../../shared/components";
 import { useAppCalendarContext } from "../../shared/contexts/CalendarContext/calendar-context";

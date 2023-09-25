@@ -23,14 +23,7 @@ export default function Today() {
         <ul className="list-none w-full flex flex-col gap-4">
           {todayTasks.length !== 0 ? (
             todayTasks.map((task) => {
-              return (
-                <Item
-                  key={task.id}
-                  title={task.title}
-                  type={task.type}
-                  description={task.description}
-                ></Item>
-              );
+              return <Item {...task}></Item>;
             })
           ) : (
             <p className="text-center text-lg font-semibold text-indigo-400 mt-5">
