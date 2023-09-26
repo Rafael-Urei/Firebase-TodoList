@@ -7,9 +7,11 @@ export default function Upcoming() {
   return (
     <>
       <DashboardLayout title="Upcoming">
-        <TaskPaper title="Today" tasks={todayTasks}></TaskPaper>
-        <TaskPaper title="Tomorrow" tasks={tomorrowTasks}></TaskPaper>
-        <TaskPaper title="Next Week" tasks={nextWeekTasks}></TaskPaper>
+        <div className="flex h-full shadow-md">
+          <TaskPaper title="Today" tasks={todayTasks}></TaskPaper>
+          <TaskPaper title="Tomorrow" tasks={tomorrowTasks}></TaskPaper>
+          <TaskPaper title="Next Week" tasks={nextWeekTasks}></TaskPaper>
+        </div>
       </DashboardLayout>
     </>
   );

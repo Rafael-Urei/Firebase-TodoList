@@ -1,6 +1,5 @@
 import { X, Search } from "lucide-react";
 import { useAppMenuContext } from "../contexts/MenuContext/menu-context";
-import { motion } from "framer-motion";
 import { ReactNode, useState } from "react";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
 import classNames from "classnames";
@@ -20,24 +19,34 @@ type LinkRouteProps = {
 };
 
 const ListWithRoutes = ({ to, label, onClick, icon }: LinkRouteProps) => {
+  const { toggleTaskMenu, isOpen } = useAppTaskMenuContext();
   const resolvedPath = useResolvedPath(to);
   const navigate = useNavigate();
   const match = useMatch({ path: resolvedPath.pathname, end: false });
   const handleNavigate = () => {
     navigate(to);
     onClick?.();
+    if (isOpen) return toggleTaskMenu();
   };
 
   return (
     <li
       className={
         !!match
-          ? "bg-zinc-200 text-sm font-bold flex items-center p-2 rounded gap-2 cursor-pointer"
+          ? "bg-indigo-600 text-zinc-50 text-sm font-bold flex items-center p-2 rounded gap-2 cursor-pointer"
           : "bg-trasnparent text-sm flex items-center p-2 rounded gap-2 cursor-pointer hover:bg-slate-200"
       }
       onClick={handleNavigate}
     >
-      {icon}
+      <div
+        className={
+          !!match
+            ? "h-4 w-4 text-slate-50 flex items-center justify-center"
+            : "h-4 w-4 text-indigo-600 flex items-center justify-center"
+        }
+      >
+        {icon}
+      </div>
       <h2>{label}</h2>
     </li>
   );
@@ -53,7 +62,7 @@ export const Menu = ({ children }: IProps) => {
     <>
       <div className="h-screen">
         {isOpen ? (
-          <motion.div className="relative flex flex-col gap-4 h-full flex-1 p-4 bg-zinc-100 rounded-md text-zinc-500 scale-95 dark:bg-zinc-700">
+          <div className="relative flex flex-col gap-6 h-full flex-1 p-4 bg-zinc-50 rounded-md text-zinc-500 scale-95 dark:bg-zinc-700">
             <header className="w-full flex flex-col gap-4">
               <h1 className="font-bold text-xl">Menu</h1>
               <form className="px-2 flex w-full h-9 border rounded-md items-center">
@@ -93,7 +102,7 @@ export const Menu = ({ children }: IProps) => {
                           )
                         }
                         className={classNames(
-                          "py-2 px-4 rounded-md bg-zinc-50 cursor-pointer duration-200 hover:bg-zinc-200",
+                          "py-2 px-4 rounded-md bg-zinc-50 cursor-pointer duration-200 hover:bg-zinc-200 scale-90",
                           {
                             "bg-pink-500 text-zinc-50 hover:bg-zinc-50 hover:text-zinc-700":
                               task.type === "Work",
@@ -110,7 +119,7 @@ export const Menu = ({ children }: IProps) => {
             <button onClick={toggleMenu} className="absolute right-3">
               <X />
             </button>
-          </motion.div>
+          </div>
         ) : null}
       </div>
       <div className="w-full h-screen">{children}</div>

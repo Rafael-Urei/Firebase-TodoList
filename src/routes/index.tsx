@@ -7,7 +7,13 @@ import Dashboard from "../pages/Private/Dashboard/Dashboard";
 import { Profile } from "../pages/Private/Profile/Profile";
 import { useEffect } from "react";
 import { useAppMenuContext } from "../shared/contexts/MenuContext/menu-context";
-import { GanttChart, ListChecks } from "lucide-react";
+import {
+  GanttChart,
+  ListChecks,
+  StepForward,
+  ArrowRightFromLine,
+  ListEnd,
+} from "lucide-react";
 import Today from "../pages/Private/Today/today";
 import Tomorrow from "../pages/Private/Tomorrow/tomorrow";
 import NextWeek from "../pages/Private/NextWeek/nextweek";
@@ -26,17 +32,17 @@ export const AppRoutes = () => {
       {
         label: "Today",
         path: "/today",
-        icon: <ListChecks />,
+        icon: <ListEnd />,
       },
       {
         label: "Coming Tomorrow",
         path: "/tomorrow",
-        icon: <ListChecks />,
+        icon: <StepForward />,
       },
       {
         label: "Coming Next Week",
         path: "/nextweek",
-        icon: <ListChecks />,
+        icon: <ArrowRightFromLine />,
       },
       {
         label: "Dashboard",

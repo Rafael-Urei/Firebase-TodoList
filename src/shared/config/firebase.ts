@@ -13,6 +13,7 @@ import {
   collection,
   updateDoc,
   doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { ILoginData } from "../../pages/Login/types";
 import { IRegisterData } from "../../pages/Register/types";
@@ -103,5 +104,14 @@ export async function AddTask(
     setLoading(false);
   } finally {
     setLoading(false);
+  }
+}
+
+export async function DeleteTask(id: string, setTasks: any, taskId: string) {
+  try {
+    const result = await deleteDoc(doc(db, "users", id, "tasks", taskId));
+    setTasks((prev: any) => prev.filter((task: any) => task.id !== taskId));
+  } catch (error) {
+    console.log(error);
   }
 }

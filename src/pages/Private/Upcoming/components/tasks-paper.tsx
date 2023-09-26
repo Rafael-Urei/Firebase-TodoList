@@ -8,7 +8,7 @@ type IProps = {
 
 export default function TaskPaper({ title, tasks }: IProps) {
   return (
-    <div className="flex-1 bg-white rounded-md p-10 h-full overflow-scroll">
+    <div className="flex-1 bg-white rounded-md p-10 h-full overflow-scroll border-2">
       <header className="w-full text-center mb-10">
         <h1 className="font-semibold text-lg text-zinc-600">{title}</h1>
       </header>

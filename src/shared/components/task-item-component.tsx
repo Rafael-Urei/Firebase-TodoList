@@ -9,7 +9,7 @@ export default function Item({ ...task }: ITasksData) {
   return (
     <li
       className={classNames(
-        "flex flex-col gap-3 bg-zinc-50 min-h-24 h-auto shadow-md rounded-md p-4 cursor-pointer duration-500 hover:bg-slate-100"
+        "flex flex-col gap-3 bg-zinc-50 min-h-24 h-auto shadow-md rounded-md p-4 cursor-pointer duration-500 hover:bg-slate-100 w-full"
       )}
       onClick={() =>
         selectTaskAndOpenTaskMenu(

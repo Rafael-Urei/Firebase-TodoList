@@ -5,12 +5,11 @@ import "../../styles/global.css";
 interface IProps {
   children: React.ReactNode;
   type: "button" | "submit";
-  style?: "CLOSE_BUTTON";
   size?: "sm" | "normal" | "lg";
   onClick?: () => void;
 }
 
-export default function Button({ type, children, onClick, style }: IProps) {
+export default function Button({ type, children, onClick }: IProps) {
   const [focused, setFocused] = useState(false);
   return (
     <button
@@ -19,8 +18,6 @@ export default function Button({ type, children, onClick, style }: IProps) {
         "rounded w-full h-9 bg-indigo-600 text-zinc-50 font-semibold duration-300",
         {
           "outline outline-sky-300": focused,
-          "fixed z-20 h-12 bg-zinc-50 text-zinc-600 hover:bg-rose-500 hover:text-zinc-50 rounded-none":
-            style === "CLOSE_BUTTON",
         }
       )}
       onFocus={() => setFocused(true)}
