@@ -9,7 +9,10 @@ import Select from "../../shared/components/selector-component";
 import { Modal } from "../../shared/components/modal-component";
 import { X } from "lucide-react";
 import { AddTask } from "../../shared/config/firebase";
-import { ITasksData } from "../../shared/contexts/task-context";
+import {
+  ITasksData,
+  useAppTasksContext,
+} from "../../shared/contexts/task-context";
 import { useAppAuthContext } from "../../shared/contexts/AuthContext/auth-context";
 import { CalendarComponent } from "../../shared/components";
 import { useAppCalendarContext } from "../../shared/contexts/CalendarContext/calendar-context";
@@ -21,6 +24,7 @@ type IProps = {
 
 export default function TaskForm({ handleModal }: IProps) {
   const { currentUser } = useAppAuthContext();
+  const { tasks, setTasks } = useAppTasksContext();
   const [loading, setLoading] = useState(false);
   const { inputValue } = useAppCalendarContext();
   const options = ["study", "work", "trip", "personal"];
@@ -34,7 +38,7 @@ export default function TaskForm({ handleModal }: IProps) {
 
   const onSubmit: SubmitHandler<ITasksFormData> = (data: ITasksData) => {
     data.date = inputValue.toISOString();
-    AddTask(data, setLoading, `${currentUser?.uid}`);
+    AddTask(data, setLoading, `${currentUser?.uid}`, setTasks);
     handleModal(false);
   };
 

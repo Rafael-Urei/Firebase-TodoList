@@ -7,10 +7,16 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { addDoc, getFirestore, collection } from "firebase/firestore";
+import {
+  addDoc,
+  getFirestore,
+  collection,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 import { ILoginData } from "../../pages/Login/types";
 import { IRegisterData } from "../../pages/Register/types";
-import { ITasksData } from "../contexts/Tasks/types";
+import { ITasksData } from "../contexts/task-context";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -79,7 +85,8 @@ export async function SignOut(navigate: (value: string) => void) {
 export async function AddTask(
   data: ITasksData,
   setLoading: (value: boolean) => void,
-  id: string
+  id: string,
+  setTasks: any
 ) {
   try {
     setLoading(true);
@@ -88,7 +95,9 @@ export async function AddTask(
       ...data,
       done: false,
     });
-    // setTasks(oldValue => [...oldValue, {...data, done: false, result.id}])
+    setTasks((prev: any) => {
+      return [...prev, { ...data, id: result.id }];
+    });
   } catch (error) {
     console.log(error);
     setLoading(false);

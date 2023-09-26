@@ -8,7 +8,6 @@ import Button from "../../../shared/components/button-component";
 import Select from "../../../shared/components/selector-component";
 import { Modal } from "../../../shared/components/modal-component";
 import { X } from "lucide-react";
-import { AddTask } from "../../../shared/config/firebase";
 import {
   ITasksData,
   useAppTasksContext,
@@ -18,6 +17,9 @@ import { CalendarComponent } from "../../../shared/components";
 import { useAppCalendarContext } from "../../../shared/contexts/CalendarContext/calendar-context";
 import DateInput from "../../../shared/components/date-input-component";
 import TextArea from "../../../shared/components/textarea-component";
+import { db } from "../../../shared/config/firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { useAppTaskMenuContext } from "../../../shared/contexts/TaskMenuContext/task-menu-context";
 
 type IProps = {
   handleModal: (value: boolean) => void;
@@ -26,8 +28,9 @@ type IProps = {
 export default function TaskEditForm({ handleModal }: IProps) {
   const { currentUser } = useAppAuthContext();
   const [loading, setLoading] = useState(false);
-  const { selectedTask } = useAppTasksContext();
+  const { selectedTask, setTasks, tasks } = useAppTasksContext();
   const { inputValue } = useAppCalendarContext();
+  const { toggleTaskMenu } = useAppTaskMenuContext();
   const options = ["study", "work", "trip", "personal"];
   const {
     register,
@@ -37,9 +40,30 @@ export default function TaskEditForm({ handleModal }: IProps) {
     setFocus,
   } = useForm<ITasksFormData>({ resolver: zodResolver(TaskSchema) });
 
-  const onSubmit: SubmitHandler<ITasksFormData> = (data: ITasksData) => {
-    data.date = inputValue.toISOString();
-    console.log(data);
+  const onSubmit: SubmitHandler<ITasksFormData> = async (data: ITasksData) => {
+    try {
+      data.date = inputValue.toISOString();
+      data = { ...data, id: `${selectedTask?.id}` };
+      const docRef = doc(
+        db,
+        "users",
+        `${currentUser?.uid}`,
+        "tasks",
+        `${selectedTask?.id}`
+      );
+      const result = await updateDoc(docRef, { ...data });
+      setTasks(
+        tasks.map((task) => {
+          if (task.id === selectedTask?.id) {
+            return { ...data };
+          } else {
+            return task;
+          }
+        })
+      );
+      toggleTaskMenu();
+    } catch {}
+
     handleModal(false);
   };
 
