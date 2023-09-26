@@ -15,7 +15,7 @@ export default function TaskPaper({ title, tasks }: IProps) {
       <ul className="list-none w-full flex flex-col gap-4">
         {tasks.length !== 0 ? (
           tasks.map((task) => {
-            return <Item {...task}></Item>;
+            return <Item key={task.id} {...task}></Item>;
           })
         ) : (
           <p className="text-center text-lg font-semibold text-indigo-400 mt-5">

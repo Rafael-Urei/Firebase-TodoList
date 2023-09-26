@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useState } from "react";
 
 interface ITaskMenuContextData {
   isOpen: boolean;
-  toggleTaskMenu: (value: boolean) => void;
+  toggleTaskMenu: () => void;
 }
 
 interface IProp {
@@ -18,8 +18,8 @@ export const useAppTaskMenuContext = () => {
 export const AppTaskMenuProvider = ({ children }: IProp) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const toggleTaskMenu = useCallback((value: boolean) => {
-    setIsOpen((prev) => (prev = value));
+  const toggleTaskMenu = useCallback(() => {
+    setIsOpen((prev) => !prev);
   }, []);
 
   return (

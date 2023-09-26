@@ -5,6 +5,8 @@ import { ReactNode, useState } from "react";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
 import classNames from "classnames";
 import { useAppTasksContext } from "../contexts/task-context";
+import { selectTaskAndOpenTaskMenu } from "../utils/select-task";
+import { useAppTaskMenuContext } from "../contexts/TaskMenuContext/task-menu-context";
 
 interface IProps {
   children: React.ReactNode;
@@ -43,8 +45,9 @@ const ListWithRoutes = ({ to, label, onClick, icon }: LinkRouteProps) => {
 
 export const Menu = ({ children }: IProps) => {
   const { isOpen, toggleMenu, menuOptions } = useAppMenuContext();
+  const { isOpen: isTaskMenuOpen, toggleTaskMenu } = useAppTaskMenuContext();
   const [search, setSearch] = useState("");
-  const { tasks } = useAppTasksContext();
+  const { tasks, selectTask } = useAppTasksContext();
   let filteredTasks = tasks.filter((tasks) => tasks.title.includes(search));
   return (
     <>
@@ -81,6 +84,14 @@ export const Menu = ({ children }: IProps) => {
                     return (
                       <div
                         key={task.id}
+                        onClick={() =>
+                          selectTaskAndOpenTaskMenu(
+                            isTaskMenuOpen,
+                            toggleTaskMenu,
+                            task,
+                            selectTask
+                          )
+                        }
                         className={classNames(
                           "py-2 px-4 rounded-md bg-zinc-50 cursor-pointer duration-200 hover:bg-zinc-200",
                           {

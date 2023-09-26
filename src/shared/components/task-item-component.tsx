@@ -1,14 +1,24 @@
 import classNames from "classnames";
 import { ITasksData, useAppTasksContext } from "../contexts/task-context";
+import { useAppTaskMenuContext } from "../contexts/TaskMenuContext/task-menu-context";
+import { selectTaskAndOpenTaskMenu } from "../utils/select-task";
 
 export default function Item({ ...task }: ITasksData) {
+  const { isOpen: isTaskMenuOpen, toggleTaskMenu } = useAppTaskMenuContext();
   const { selectTask } = useAppTasksContext();
   return (
     <li
       className={classNames(
         "flex flex-col gap-3 bg-zinc-50 min-h-24 h-auto shadow-md rounded-md p-4 cursor-pointer duration-500 hover:bg-slate-100"
       )}
-      onClick={() => selectTask({ ...task })}
+      onClick={() =>
+        selectTaskAndOpenTaskMenu(
+          isTaskMenuOpen,
+          toggleTaskMenu,
+          task,
+          selectTask
+        )
+      }
     >
       <h1 className="capitalize font-semibold text-zinc-600">{task.title}</h1>
       {task.description && (
