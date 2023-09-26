@@ -1,51 +1,94 @@
-import { format, formatISO } from "date-fns";
+import { useState } from "react";
 import { useAppTasksContext } from "../../shared/contexts/task-context";
-import TogglableInput from "./components/EditInput";
-import { useAppTaskMenuContext } from "../../shared/contexts/TaskMenuContext/task-menu-context";
+import { format } from "date-fns";
+import { useAppCalendarContext } from "../../shared/contexts/CalendarContext/calendar-context";
 
 export default function EditTaskForm() {
-  const { isOpen, toggleTaskMenu } = useAppTaskMenuContext();
+  const [edit, setEdit] = useState(false);
   const { selectedTask } = useAppTasksContext();
-
+  const { inputValue } = useAppCalendarContext();
   return (
     <>
-      {isOpen ? (
-        <div className="flex flex-col w-1/3 border bg-zinc-100 font-semibold">
-          <div className="flex flex-1 flex-col gap-4 bg-zinc-50 rounded-md scale-90 p-10 h-full shadow-md">
-            <h1 className="mb-5 text-[20px]">{selectedTask?.title}</h1>
-            <span className="mr-2 text-sm font-medium">Description:</span>
-            <div className="h-40 border p-2 rounded-md text-sm text-zinc-500 overflow-scroll">
-              {selectedTask?.description}
+      <form className="flex flex-col gap-4 h-screen w-1/3 bg-zinc-50 p-10 shadow-md overflow-scroll font-normal text-sm">
+        <div>
+          {edit ? (
+            <div className="flex flex-col gap-2">
+              <label>Title:</label>
+              <input
+                className="px-2 border-b border-indigo-600 bg-transparent"
+                value={selectedTask?.title}
+              ></input>
             </div>
-            <p>
-              <span className="mr-2 text-sm font-medium">Date:</span>
-              {selectedTask?.date
-                ? format(new Date(selectedTask?.date), "MM/dd/yyyy")
-                : null}
-            </p>
-            <p>
-              <span className="mr-2 text-sm font-medium">Type:</span>
-              {selectedTask?.type}
-            </p>
-            {/* <form className="flex flex-col">
-        <TogglableInput value={selectedTask?.description} />
-        <TogglableInput value={selectedTask?.type} />
-        <TogglableInput value={selectedTask?.date} />
-      </form> */}
-          </div>
-          <div className="flex w-full items-center justify-center gap-4 p-5 mb-5">
-            <button
-              className="border-2 border-zinc-700 w-32 h-8 rounded-md bg-transparent"
-              onClick={toggleTaskMenu}
-            >
-              Close
-            </button>
-            <button className="bg-indigo-600 text-zinc-50 w-32 h-8 rounded-md">
-              Edit
-            </button>
-          </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              <label>Title:</label>
+              <h1 className="px-2">{selectedTask?.title}</h1>
+            </div>
+          )}
         </div>
-      ) : null}
+        <div>
+          {edit ? (
+            <div className="flex flex-col gap-2">
+              <label>Description:</label>
+              <textarea
+                value={selectedTask?.description}
+                className="px-2 border-b max-h-40 border-indigo-600 bg-transparent"
+                defaultValue={selectedTask?.description}
+              ></textarea>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              <label>Description:</label>
+              <div className="px-2  max-h-40 overflow-scroll">
+                {selectedTask?.description}
+              </div>
+            </div>
+          )}
+        </div>
+        <div>
+          {edit ? (
+            <div className="flex flex-col gap-2">
+              <label>Date:</label>
+              <input
+                value={format(inputValue, "MM/dd/yyyy")}
+                className="px-2 border-b border-indigo-600 w-32 text-center bg-transparent"
+              ></input>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              <label>Date:</label>
+              <div className="px-2  max-h-40 overflow-scroll">
+                {selectedTask
+                  ? format(new Date(`${selectedTask?.date}`), "MM/dd/yyyy")
+                  : null}
+              </div>
+            </div>
+          )}
+        </div>
+        <div>
+          {edit ? (
+            <div className="flex flex-col gap-2">
+              <label>Type:</label>
+              <select
+                className="px-2 border-b border-indigo-600 w-32 bg-transparent"
+                defaultValue={selectedTask?.type}
+              >
+                <option>Work</option>
+                <option>Study</option>
+                <option>Personal</option>
+                <option>Trip</option>
+              </select>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              <label>Type:</label>
+              <div className="px-2  max-h-40 overflow-scroll">
+                <p>{selectedTask?.type}</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </form>
     </>
   );
 }
