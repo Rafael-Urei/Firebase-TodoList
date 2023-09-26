@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IProps {
   label: string;
@@ -11,7 +11,7 @@ interface IProps {
   value?: string;
 }
 
-export default function Input({
+export default function TextArea({
   label,
   size = "lg",
   name,
@@ -22,11 +22,15 @@ export default function Input({
 }: IProps) {
   const [focused, setFocused] = useState(false);
 
+  useEffect(() => {
+    setFocused(true);
+  }, []);
+
   return (
     <>
       <div
         className={classNames(
-          "relative flex items-center justify-center bg-zinc-50 border border-gray-300 rounded h-10 duration 200 outline-1",
+          "relative flex items-center justify-center bg-zinc-50 border border-gray-300 rounded h-auto duration 200 outline-1",
           {
             "border-indigo-600 outline outline-indigo-600":
               focused && !errors?.[name],
@@ -49,11 +53,11 @@ export default function Input({
         >
           {label}
         </label>
-        <input
+        <textarea
           defaultValue={value}
           autoComplete="off"
           autoCorrect="off"
-          className="w-full px-4 bg-transparent z-10 h-full rounded text-sm"
+          className="w-full px-4 bg-transparent py-4 h-40 max-h-40 z-10 rounded text-sm"
           type="text"
           {...register(name)}
           onFocus={() => setFocused(true)}
