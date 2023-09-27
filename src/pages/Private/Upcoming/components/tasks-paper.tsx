@@ -9,7 +9,7 @@ type IProps = {
 
 export default function TaskPaper({ title, tasks }: IProps) {
   return (
-    <div className="flex-1 bg-white rounded-md p-10 h-full overflow-scroll border-2">
+    <div className="min-w-[300px] w-[500px] bg-white rounded-md p-10 h-96 overflow-scroll border-2">
       <header className="w-full text-center mb-10">
         <h1 className="font-semibold text-lg text-zinc-600">{title}</h1>
       </header>
@@ -19,7 +19,7 @@ export default function TaskPaper({ title, tasks }: IProps) {
             return <Item key={task.id} {...task}></Item>;
           })
         ) : (
-          <Alert title="There are no tasks upcoming..."></Alert>
+          <Alert title="There are no tasks "></Alert>
         )}
       </ul>
     </div>

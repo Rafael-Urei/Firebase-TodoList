@@ -13,17 +13,24 @@ import {
   StepForward,
   ArrowRightFromLine,
   ListEnd,
+  StickyNote,
 } from "lucide-react";
 import Today from "../pages/Private/Today/today";
 import Tomorrow from "../pages/Private/Tomorrow/tomorrow";
 import NextWeek from "../pages/Private/NextWeek/nextweek";
 import Upcoming from "../pages/Private/Upcoming/upcoming";
+import AllTasks from "../pages/Private/AllTasks/alltasks";
 
 export const AppRoutes = () => {
   const { currentUser }: any = useAppAuthContext();
   const { setMenuOptions } = useAppMenuContext();
   useEffect(() => {
     setMenuOptions([
+      {
+        label: "All Tasks",
+        path: "/alltasks",
+        icon: <StickyNote />,
+      },
       {
         label: "Upcoming",
         path: "/upcoming",
@@ -58,6 +65,7 @@ export const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Navigate to="/home" />} />
+        {currentUser && <Route path="/alltasks" element={<AllTasks />} />}
         {currentUser && <Route path="/dashboard" element={<Dashboard />} />}
         {currentUser && <Route path="/upcoming" element={<Upcoming />} />}
         {currentUser && <Route path="/today" element={<Today />} />}

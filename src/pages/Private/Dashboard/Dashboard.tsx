@@ -6,7 +6,7 @@ export default function Dashboard() {
   const { todayTasks, tomorrowTasks, nextWeekTasks } = useAppTasksContext();
   return (
     <DashboardLayout title="Dashboard">
-      <div className="flex w-full justify-between flex-wrap">
+      <div className="flex justify-center gap-4 flex-wrap items-center">
         <Paper title="Upcoming">
           {todayTasks.length + tomorrowTasks.length + nextWeekTasks.length}
         </Paper>

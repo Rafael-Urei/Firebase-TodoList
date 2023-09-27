@@ -40,10 +40,10 @@ export default function DoneButton({ task }: Props) {
 
   return (
     <div
-      className="p-2 rounded-md flex self-center justify-center duration-200 font-semibold cursor-pointer"
+      className="p-2 w-full flex self-center justify-center duration-200 font-semibold cursor-pointer hover:bg-indigo-200 rounded-br-md rounded-bl-md"
       onClick={handleDoneTask}
     >
-      {task.done ? <p>Undone</p> : <p className="text-indigo-600">Done</p>}
+      {task.done ? <p>Undone</p> : <p className="text-zinc-600">Done</p>}
     </div>
   );
 }

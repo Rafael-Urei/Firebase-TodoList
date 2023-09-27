@@ -6,7 +6,7 @@ export const ToggleMenu = () => {
   return (
     <>
       {!isOpen ? (
-        <button onClick={toggleMenu}>
+        <button onClick={toggleMenu} className="pr-4">
           <Menu className="h-5 w-5" />
         </button>
       ) : null}

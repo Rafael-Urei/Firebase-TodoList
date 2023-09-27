@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <AuthLayout title="Sign In">
       <div className="h-full bg-transparent flex items-center justify-center">
-        <div className="flex flex-col h-auto w-96 gap-2 rounded bg-zinc-50 items-center justify-center px-8 py-8 shadow-md">
+        <div className="flex flex-col h-auto w-96 gap-2 rounded bg-zinc-50 items-center justify-center px-8 py-8 shadow-md scale-95">
           <div className="w-full flex items-center justify-center bg-transparent text-blue-500 p-3 mb-2">
             <h1 className="text-lg">Login</h1>
           </div>

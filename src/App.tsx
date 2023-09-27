@@ -10,7 +10,7 @@ import TaskMenu from "./components/EditTaskForm/task-menu";
 
 export const App = () => {
   return (
-    <div className="flex bg-slate-50 w-screen dark:bg-zinc-800">
+    <div className="flex bg-white w-screen dark:bg-zinc-800">
       <AppAuthProvider>
         <AppTaskMenuProvider>
           <AppTasksProvider>

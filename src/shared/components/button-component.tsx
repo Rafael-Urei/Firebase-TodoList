@@ -15,7 +15,7 @@ export default function Button({ type, children, onClick }: IProps) {
     <button
       type={type}
       className={classNames(
-        "rounded w-full h-9 bg-indigo-600 text-zinc-50 font-semibold duration-300",
+        "rounded w-full text-zinc-600 border-2 h-12 font-semibold duration-300",
         {
           "outline outline-sky-300": focused,
         }

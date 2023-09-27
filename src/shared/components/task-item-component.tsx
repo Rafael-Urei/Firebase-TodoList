@@ -10,10 +10,15 @@ export default function Item({ ...task }: ITasksData) {
   const { selectTask } = useAppTasksContext();
 
   return (
-    <div className="w-full flex gap-2">
+    <div
+      className={classNames(
+        "bg-white border-2 flex flex-col justify-between rounded-md w-full",
+        task.done && "opacity-40"
+      )}
+    >
       <li
         className={classNames(
-          "flex flex-col gap-3 bg-zinc-50 min-h-24 h-auto shadow-md rounded-md p-4 cursor-pointer duration-500 hover:bg-slate-100 w-full",
+          "flex flex-col gap-3 rounded-md p-4 cursor-pointer duration-500 hover:bg-slate-100 w-full",
           { "line-through": task.done }
         )}
         onClick={() =>
@@ -25,12 +30,10 @@ export default function Item({ ...task }: ITasksData) {
           )
         }
       >
-        <h1 className="capitalize font-semibold text-zinc-600">{task.title}</h1>
-        {task.description && (
-          <div className="min-h-10 p-4 rounded-md w-full text-zinc-400 text-xs">
-            {task.description}
-          </div>
-        )}
+        <h1 className="capitalize font-semibold text-zinc-800">{task.title}</h1>
+        <div className="h-10 p-4 rounded-md w-full text-zinc-400 text-xs overflow-hidden">
+          {task.description}
+        </div>
         <div className="flex rounded items-center p-2 gap-2 opacity-50">
           <div
             className={classNames(

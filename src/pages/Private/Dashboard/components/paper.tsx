@@ -4,7 +4,7 @@ export default function Paper({ children, title }: any) {
   const navigate = useNavigate();
   return (
     <div
-      className="flex flex-col h-96 w-96 rounded-md bg-slate-50 opacity-50 text-zinc-600 duration-200 cursor-pointer shadow-md hover:opacity-100 hover:text-indigo-600"
+      className="flex flex-col h-96 w-80 rounded-md  opacity-50 text-zinc-600 duration-200 cursor-pointer border-2 hover:opacity-100 hover:text-indigo-600"
       onClick={() =>
         navigate(`/${title.trim().toLocaleLowerCase().replace(" ", "")}`)
       }
