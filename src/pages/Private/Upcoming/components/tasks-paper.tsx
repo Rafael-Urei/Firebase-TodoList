@@ -1,5 +1,6 @@
 import Item from "../../../../shared/components/task-item-component";
 import { ITasksData } from "../../../../shared/contexts/task-context";
+import Alert from "../../NextWeek/components/empty-tasks-alert";
 
 type IProps = {
   title: string;
@@ -18,9 +19,7 @@ export default function TaskPaper({ title, tasks }: IProps) {
             return <Item key={task.id} {...task}></Item>;
           })
         ) : (
-          <p className="text-center text-lg font-semibold text-indigo-400 mt-5">
-            There are no tasks for today...
-          </p>
+          <Alert title="There are no tasks upcoming..."></Alert>
         )}
       </ul>
     </div>

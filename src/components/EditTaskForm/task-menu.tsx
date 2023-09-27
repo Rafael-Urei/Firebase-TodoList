@@ -5,6 +5,7 @@ import { useAppTaskMenuContext } from "../../shared/contexts/TaskMenuContext/tas
 import TaskEditForm from "./components/task-edit-form";
 import { DeleteTask } from "../../shared/config/firebase";
 import { useAppAuthContext } from "../../shared/contexts/AuthContext/auth-context";
+import DoneButton from "../../shared/components/done-task-button-component";
 
 export default function TaskMenu() {
   const { currentUser } = useAppAuthContext();
@@ -57,6 +58,7 @@ export default function TaskMenu() {
               </div>
             </div>
           </div>
+          {selectedTask && <DoneButton task={selectedTask} />}
           <div className="w-full flex gap-4 items-center justify-center">
             <button
               className="border-2 border-zinc-600 font-medium rounded p-2 w-32"
@@ -73,12 +75,13 @@ export default function TaskMenu() {
             <button
               className="bg-rose-600 font-medium rounded p-2 text-zinc-50 w-32"
               onClick={() => {
+                handleModal(false);
                 DeleteTask(
                   `${currentUser?.uid}`,
                   setTasks,
                   `${selectedTask?.id}`
                 );
-                setOpenModal(false);
+                toggleTaskMenu();
               }}
             >
               Delete

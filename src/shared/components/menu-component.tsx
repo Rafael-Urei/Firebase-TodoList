@@ -101,16 +101,30 @@ export const Menu = ({ children }: IProps) => {
                             selectTask
                           )
                         }
-                        className={classNames(
-                          "py-2 px-4 rounded-md bg-zinc-50 cursor-pointer duration-200 hover:bg-zinc-200 scale-90",
-                          {
-                            "bg-pink-500 text-zinc-50 hover:bg-zinc-50 hover:text-zinc-700":
-                              task.type === "Work",
-                          }
-                        )}
+                        className="flex items-center gap-2 bg-zinc-50 rounded shadow p-2 cursor-pointer duration-200 hover:bg-zinc-100 font-semibold text-sm text-slate-500"
                       >
-                        {task.title.charAt(0).toLocaleUpperCase() +
-                          task.title.slice(1)}
+                        <span
+                          className={classNames(task.done && "line-through")}
+                        >
+                          {task.title.charAt(0).toLocaleUpperCase() +
+                            task.title.slice(1)}
+                        </span>
+                        <div
+                          className={classNames(
+                            task.type == "Study" &&
+                              "h-2 w-2 bg-pink-600 rounded",
+                            task.type == "Work" && "h-2 w-2 bg-sky-600 rounded",
+                            task.type == "Trip" &&
+                              "h-2 w-2 bg-amber-600 rounded",
+                            task.type == "Personal" &&
+                              "h-2 w-2 bg-emerald-600 rounded"
+                          )}
+                        ></div>
+                        {task.done && (
+                          <span className="text-emerald-500 text-xs no-underline">
+                            Done
+                          </span>
+                        )}
                       </div>
                     );
                   })
