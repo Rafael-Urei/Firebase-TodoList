@@ -11,7 +11,6 @@ import {
   addDoc,
   getFirestore,
   collection,
-  updateDoc,
   doc,
   deleteDoc,
 } from "firebase/firestore";
@@ -109,7 +108,7 @@ export async function AddTask(
 
 export async function DeleteTask(id: string, setTasks: any, taskId: string) {
   try {
-    const result = await deleteDoc(doc(db, "users", id, "tasks", taskId));
+    await deleteDoc(doc(db, "users", id, "tasks", taskId));
     setTasks((prev: any) => prev.filter((task: any) => task.id !== taskId));
   } catch (error) {
     console.log(error);

@@ -20,7 +20,7 @@ export default function DoneButton({ task }: Props) {
         "tasks",
         `${task.id}`
       );
-      const result = await updateDoc(docRef, {
+      await updateDoc(docRef, {
         ...task,
         done: !task.done,
       });

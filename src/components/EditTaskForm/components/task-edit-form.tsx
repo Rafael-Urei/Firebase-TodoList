@@ -3,7 +3,7 @@ import Input from "../../../shared/components/input-component";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TaskSchema } from "../tasksform-schema";
 import { ITasksFormData } from "../types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Button from "../../../shared/components/button-component";
 import Select from "../../../shared/components/selector-component";
 import { Modal } from "../../../shared/components/modal-component";
@@ -27,7 +27,6 @@ type IProps = {
 
 export default function TaskEditForm({ handleModal }: IProps) {
   const { currentUser } = useAppAuthContext();
-  const [loading, setLoading] = useState(false);
   const { selectedTask, setTasks, tasks } = useAppTasksContext();
   const { inputValue } = useAppCalendarContext();
   const { toggleTaskMenu } = useAppTaskMenuContext();
@@ -51,7 +50,7 @@ export default function TaskEditForm({ handleModal }: IProps) {
         "tasks",
         `${selectedTask?.id}`
       );
-      const result = await updateDoc(docRef, { ...data });
+      await updateDoc(docRef, { ...data });
       setTasks(
         tasks.map((task) => {
           if (task.id === selectedTask?.id) {

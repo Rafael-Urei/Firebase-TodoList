@@ -24,7 +24,7 @@ type IProps = {
 
 export default function TaskForm({ handleModal }: IProps) {
   const { currentUser } = useAppAuthContext();
-  const { tasks, setTasks } = useAppTasksContext();
+  const { setTasks } = useAppTasksContext();
   const [loading, setLoading] = useState(false);
   const { inputValue } = useAppCalendarContext();
   const options = ["study", "work", "trip", "personal"];
@@ -37,6 +37,7 @@ export default function TaskForm({ handleModal }: IProps) {
   } = useForm<ITasksFormData>({ resolver: zodResolver(TaskSchema) });
 
   const onSubmit: SubmitHandler<ITasksFormData> = (data: ITasksData) => {
+    console.log(loading);
     data.date = inputValue.toISOString();
     AddTask(data, setLoading, `${currentUser?.uid}`, setTasks);
     handleModal(false);
