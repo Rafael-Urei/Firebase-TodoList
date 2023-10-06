@@ -61,7 +61,6 @@ export function AppTasksProvider({ children }: IProps) {
   }, []);
 
   useEffect(() => {
-    console.log(currentUser?.email);
     if (currentUser) {
       setLoading(true);
       async function fetchData() {
